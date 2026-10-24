@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Drill Soal TKA - Kirana Gilang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#582f9c; --purple-d:#3b1d78; --purple-l:#f1ebfb; --purple-m:#7c4fd6;
+  --orange:#ff6b35; --orange-h:#e85a24; --teal:#13c2b4;
+  --ink:#1f2340; --mute:#6b7191; --line:#e6e8f0; --bg:#f4f5fb; --card:#fff;
+  --ok:#16a34a; --ok-bg:#e8f9ef; --bad:#dc2626; --bad-bg:#feecec;
+  --head:'Poppins',system-ui,sans-serif; --body:'Nunito Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{font-family:var(--body);color:var(--ink);display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#27d3df 0%,#0fa9a6 100%);position:relative;overflow:hidden}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.2) 1.6px,transparent 1.6px);background-size:22px 22px;pointer-events:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+h1,h2,h3,h4,.head{font-family:var(--head)}
+.app{position:relative;width:100%;max-width:430px;height:100dvh;max-height:900px;background:var(--bg);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,40,60,.35)}
+@media(min-width:500px){.app{border-radius:30px;height:92vh}}
+.view{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg)}
+.hidden{display:none!important}
+.enter{animation:slideIn .38s cubic-bezier(.2,.8,.2,1)}
+.enter-up{animation:fadeUp .4s cubic-bezier(.2,.8,.2,1)}
+@keyframes slideIn{from{transform:translateX(26px);opacity:0}to{transform:none;opacity:1}}
+@keyframes fadeUp{from{transform:translateY(18px);opacity:0}to{transform:none;opacity:1}}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{transform:scale(.96)}50%{transform:scale(1.035)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+@keyframes floatUp{0%{opacity:0;transform:translateY(8px) scale(.8)}20%{opacity:1}100%{opacity:0;transform:translateY(-46px) scale(1.1)}}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+@keyframes spinIn{from{transform:scale(.4) rotate(-40deg);opacity:0}to{transform:none;opacity:1}}
+@keyframes pulseWarn{50%{background:#ffd9d9}}
+
+/* ===== Header ===== */
+.hdr{background:var(--purple);color:#fff;flex-shrink:0;position:relative;z-index:5}
+.hdr-top{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 10px;background:var(--purple-d)}
+.logo{font-family:var(--head);font-weight:700;font-size:15px;line-height:.95;letter-spacing:-.3px}
+.logo b{color:#5ee0d2}
+.who{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;opacity:.95}
+.avatar{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;font-family:var(--head)}
+.hdr-nav{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.ibtn{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s}
+.ibtn:hover{background:rgba(255,255,255,.16)}.ibtn:active{transform:scale(.9)}
+.ibtn svg{width:22px;height:22px}
+.crumb{font-family:var(--head);font-weight:600;font-size:16px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kelas{background:#fff;color:var(--purple);font-weight:800;font-size:12px;padding:7px 12px;border-radius:999px;display:flex;align-items:center;gap:4px;position:relative}
+.pop-menu{position:absolute;right:14px;top:104px;background:#fff;color:var(--ink);border-radius:14px;box-shadow:0 12px 36px rgba(30,20,80,.28);padding:6px;z-index:30;min-width:200px;animation:fadeUp .22s}
+.pop-menu button{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:10px;font-size:13px;font-weight:700}
+.pop-menu button:hover{background:var(--purple-l)}
+.pop-menu button[disabled]{opacity:.45;cursor:not-allowed}
+.scroll{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+.scroll::-webkit-scrollbar{width:0}
+
+/* ===== Home ===== */
+.banner{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:16px;color:#fff;background:linear-gradient(120deg,#6a3fc4,#4b2a97 60%,#8a63e0);box-shadow:0 8px 20px rgba(88,47,156,.28);font-weight:700;font-size:13px;text-align:left;width:100%;position:relative;overflow:hidden;transition:transform .15s}
+.banner:active{transform:scale(.985)}
+.banner::after{content:"";position:absolute;right:-20px;top:-30px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.1)}
+.banner .sp{width:34px;height:34px;border-radius:12px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.card{background:var(--card);border-radius:18px;box-shadow:0 4px 16px rgba(40,30,100,.07);border:1px solid #eef0f6}
+.profile{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
+.profile .l{display:flex;align-items:center;gap:12px}
+.pavatar{width:48px;height:48px;border-radius:50%;background:#d8f3f1;border:2px solid var(--teal);display:flex;align-items:center;justify-content:center;color:#0c9488}
+.pname{font-family:var(--head);font-weight:700;font-size:16px}
+.coin{display:inline-flex;align-items:center;gap:5px;font-weight:800;color:#e08a00;font-size:13px}
+.coin i{width:17px;height:17px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe27a,#f5a50c);box-shadow:inset 0 0 0 2px #ffd24d,0 1px 2px rgba(0,0,0,.2);display:inline-block}
+.btn-line{display:flex;align-items:center;gap:2px;font-weight:800;font-size:13px;color:var(--purple);padding:8px 8px 8px 12px;border-radius:12px;border:1.5px solid var(--purple-l);background:#faf7ff;transition:background .2s,transform .15s}
+.btn-line:hover{background:var(--purple-l)}.btn-line:active{transform:scale(.94)}
+.sec-title{font-family:var(--head);font-weight:700;font-size:16px;margin-top:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.subj{padding:14px;display:flex;flex-direction:column;gap:10px;text-align:left;position:relative;transition:transform .18s,box-shadow .2s,border-color .2s;animation:fadeUp .45s both}
+.subj:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(88,47,156,.16);border-color:#d9c9f5}
+.subj:active{transform:scale(.97)}
+.subj .ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center}
+.subj .ic svg{width:24px;height:24px}
+.subj .nm{font-family:var(--head);font-weight:700;font-size:14px;line-height:1.25}
+.subj .row{display:flex;align-items:center;justify-content:space-between}
+.subj .chev{position:absolute;right:12px;top:14px;color:#c4c8d8}
+.subj small{font-size:11px;color:var(--mute);font-weight:600}
+.bar{height:6px;border-radius:99px;background:#eceef6;overflow:hidden}
+.bar>i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--teal),#5ee0d2);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+
+/* ===== Topic list ===== */
+.search{display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;transition:border-color .2s}
+.search:focus-within{border-color:var(--purple-m)}
+.search input{border:0;outline:0;flex:1;font:600 14px var(--body);background:transparent}
+.rowline{display:flex;align-items:center;justify-content:space-between}
+.link{color:var(--purple);font-weight:800;font-size:13px}
+.topic{display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer;border:2px solid transparent;transition:border-color .2s,background .2s,transform .15s;animation:fadeUp .4s both}
+.topic:active{transform:scale(.985)}
+.topic.on{border-color:var(--purple-m);background:#fbf9ff}
+.cb{width:22px;height:22px;border-radius:7px;border:2px solid #c9cde0;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;transition:all .2s;margin-top:1px}
+.cb svg{width:14px;height:14px;opacity:0;transform:scale(.4);transition:all .2s}
+.on>.cb,.cb.on{background:var(--teal);border-color:var(--teal)}
+.on>.cb svg,.cb.on svg{opacity:1;transform:none}
+.topic .t{font-family:var(--head);font-weight:600;font-size:14px;line-height:1.35}
+.topic .m{font-size:12px;color:var(--mute);font-weight:600;margin-top:3px}
+.chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.d1{background:#e3f8ec;color:#138a4a}.d2{background:#fff2dc;color:#b26a00}.d3{background:#ffe5e5;color:#c62828}
+.foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-shrink:0}
+.foot .info{font-size:12px;color:var(--mute);font-weight:700;line-height:1.3;flex:1}
+.btn{background:linear-gradient(180deg,#ff7d4a,var(--orange));color:#fff;font-family:var(--head);font-weight:700;font-size:15px;padding:14px 22px;border-radius:14px;box-shadow:0 8px 18px rgba(255,107,53,.32);transition:transform .15s,box-shadow .2s,filter .2s;position:relative;overflow:hidden}
+.btn:hover{filter:brightness(1.05)}.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.45;box-shadow:none;cursor:not-allowed;filter:grayscale(.3)}
+.btn.full{width:100%}
+.btn.ghost{background:#fff;color:var(--purple);border:2px solid #dccdf5;box-shadow:none}
+.btn.purple{background:linear-gradient(180deg,#6d41bd,var(--purple));box-shadow:0 8px 18px rgba(88,47,156,.3)}
+.btn .rip{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rip .6s ease-out;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+
+/* ===== Sheet / dialog ===== */
+.backdrop{position:absolute;inset:0;background:rgba(18,12,48,.55);z-index:40;animation:fadeIn .25s;display:flex;align-items:flex-end;justify-content:center}
+.backdrop.center{align-items:center;padding:24px}
+.sheet{background:#fff;width:100%;border-radius:26px 26px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:sheetUp .38s cubic-bezier(.2,.8,.2,1);max-height:88%;overflow-y:auto}
+.dlg{background:#fff;border-radius:22px;padding:22px;width:100%;animation:pop .3s;text-align:center}
+.dlg h3{font-size:17px;margin-bottom:8px}.dlg p{font-size:13.5px;color:var(--mute);font-weight:600;line-height:1.55;margin-bottom:18px}
+.dlg .acts{display:flex;gap:10px}.dlg .acts .btn{flex:1;padding:12px;font-size:14px}
+.sheet h3{font-size:18px}
+.sh-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.x{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--mute)}.x:hover{background:var(--bg)}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.set-row .lb{display:flex;gap:10px;align-items:flex-start}
+.set-row .lb svg{width:22px;height:22px;flex-shrink:0;margin-top:1px}
+.set-row b{font-family:var(--head);font-size:14px;display:block}
+.set-row span.s{font-size:12px;color:var(--mute);font-weight:600}
+.stepper{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:12px;overflow:hidden;flex-shrink:0}
+.stepper button{width:36px;height:38px;font-size:20px;font-weight:700;color:var(--purple);transition:background .15s}
+.stepper button:hover{background:var(--purple-l)}.stepper button:active{background:#e5d8fa}
+.stepper button[disabled]{opacity:.3;cursor:not-allowed}
+.stepper span{min-width:42px;text-align:center;font-family:var(--head);font-weight:700;font-size:15px}
+.sum{border-top:1px dashed var(--line);padding-top:14px;margin:6px 0 18px;display:flex;flex-direction:column;gap:6px}
+.sum div{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);font-weight:700}
+.sum div b{color:var(--ink);font-family:var(--head)}
+.tchk{display:flex;align-items:center;gap:12px;margin-bottom:14px;cursor:pointer}
+.tchk b{font-family:var(--head);font-size:14px;flex:1}
+.dchips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+.dchip{padding:7px 14px;border-radius:99px;border:1.5px solid var(--line);font-size:12.5px;font-weight:800;color:var(--mute);transition:all .2s}
+.dchip.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.warnbox{background:#fff6e5;border:1px solid #ffe0a3;color:#8a5a00;border-radius:12px;padding:10px 12px;font-size:12.5px;font-weight:700;margin-bottom:14px;line-height:1.5}
+.warnbox button{color:var(--purple);font-weight:800;text-decoration:underline;margin-top:4px;display:block}
+.feat{display:flex;gap:12px;margin-bottom:14px}
+.feat .fi{width:38px;height:38px;border-radius:12px;background:var(--purple-l);color:var(--purple);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.feat b{font-family:var(--head);font-size:13.5px;display:block}.feat span{font-size:12.5px;color:var(--mute);font-weight:600;line-height:1.5}
+
+/* ===== Drill ===== */
+.dtop{background:var(--purple);color:#fff;padding:10px 12px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.dtop .tt{flex:1;min-width:0}
+.dtop .tt b{font-family:var(--head);font-size:14px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dtop .tt small{font-size:11px;opacity:.8;font-weight:600}
+.tpill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);padding:7px 11px;border-radius:99px;font-family:var(--head);font-weight:600;font-size:13px;font-variant-numeric:tabular-nums}
+.tpill svg{width:15px;height:15px}
+.tpill.warn{background:#ffe1e1;color:#c62828;animation:pulseWarn 1s infinite}
+.pbar{height:5px;background:rgba(255,255,255,.2);flex-shrink:0}.pbar i{display:block;height:100%;width:0;background:#5ee0d2;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.qmeta{display:flex;align-items:center;gap:8px}
+.qno{font-family:var(--head);font-weight:700;font-size:15px}
+.qmeta .sp{flex:1}
+.tool{width:36px;height:36px;border-radius:12px;background:#fff;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--mute);transition:all .2s;position:relative}
+.tool.on{background:#fff2dc;border-color:#ffc766;color:#d98200}
+.tool:active{transform:scale(.9)}
+.tool svg{width:18px;height:18px}
+.passage{background:#fff;border:1px solid var(--line);border-left:4px solid var(--purple-m);border-radius:14px;padding:12px 14px;font-size:13px;line-height:1.65;color:#3a3f5e;white-space:pre-line;max-height:118px;overflow:hidden;position:relative;transition:max-height .35s}
+.passage.open{max-height:2000px}
+.passage:not(.open)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46px;background:linear-gradient(transparent,#fff)}
+.ptoggle{font-size:12.5px;font-weight:800;color:var(--purple);margin-top:6px}
+.qtext{font-family:var(--head);font-weight:600;font-size:15px;line-height:1.6;white-space:pre-line}
+.hint{font-size:12px;font-weight:800;color:var(--purple-m);background:var(--purple-l);padding:5px 10px;border-radius:8px;display:inline-block;margin-top:-4px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:13px 14px;border:2px solid var(--line);border-radius:14px;background:#fff;cursor:pointer;transition:border-color .18s,background .18s,transform .12s;text-align:left;width:100%;font-size:14px;font-weight:600;line-height:1.5}
+.opt:hover{border-color:#cdbdee}.opt:active{transform:scale(.985)}
+.opt .ltr{width:30px;height:30px;border-radius:50%;border:2px solid #cfd3e3;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:700;font-size:13px;color:var(--mute);flex-shrink:0;transition:all .2s}
+.opt.multi .ltr{border-radius:9px}
+.opt.sel{border-color:var(--purple-m);background:var(--purple-l)}
+.opt.sel .ltr{background:var(--purple);border-color:var(--purple);color:#fff}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg);animation:pop .4s}
+.opt.ok .ltr{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg);animation:shake .45s}
+.opt.bad .ltr{background:var(--bad);border-color:var(--bad);color:#fff}
+.opt.lock{cursor:default}.opt.lock:hover{border-color:inherit}
+.tfc{background:#fff;border:2px solid var(--line);border-radius:14px;padding:13px 14px}
+.tfc p{font-size:14px;font-weight:600;line-height:1.55;white-space:pre-line;margin-bottom:10px}
+.tfc .btns{display:flex;gap:8px}
+.tfb{flex:1;padding:10px 6px;border-radius:11px;border:2px solid var(--line);font-family:var(--head);font-weight:600;font-size:12.5px;color:var(--mute);transition:all .18s}
+.tfb:hover{border-color:#cdbdee}.tfb:active{transform:scale(.96)}
+.tfb.sel{background:var(--purple);border-color:var(--purple);color:#fff}
+.tfb.ok{background:var(--ok);border-color:var(--ok);color:#fff;animation:pop .4s}
+.tfb.bad{background:var(--bad);border-color:var(--bad);color:#fff;animation:shake .45s}
+.tfb.key{border-color:var(--ok);color:var(--ok);background:var(--ok-bg)}
+.fb{border-radius:16px;padding:14px 16px;border:1.5px solid;animation:fadeUp .4s}
+.fb.ok{background:var(--ok-bg);border-color:#a8e6bf}.fb.bad{background:var(--bad-bg);border-color:#f5b5b5}
+.fb h4{font-size:15px;margin-bottom:6px}.fb.ok h4{color:var(--ok)}.fb.bad h4{color:var(--bad)}
+.fb p{font-size:13px;line-height:1.65;color:#3a3f5e;font-weight:600;white-space:pre-line}
+.fb .key{font-size:12.5px;font-weight:700;margin-bottom:8px;color:#3a3f5e}
+.vid{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #ffd0d0;border-radius:12px;padding:10px 12px;margin-top:12px;transition:transform .15s,box-shadow .2s}
+.vid:hover{box-shadow:0 6px 16px rgba(220,38,38,.15);transform:translateY(-1px)}
+.vid .yt{width:36px;height:26px;border-radius:7px;background:#ff0000;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.vid .yt svg{width:12px;height:12px;fill:#fff}
+.vid b{font-size:12.5px;font-family:var(--head);display:block;color:var(--ink)}
+.vid span{font-size:11.5px;color:var(--mute);font-weight:600;line-height:1.4;display:block}
+.floatpts{position:absolute;right:20px;top:150px;font-family:var(--head);font-weight:800;color:#e08a00;font-size:18px;animation:floatUp 1.3s forwards;pointer-events:none;z-index:20}
+.qgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.qn{aspect-ratio:1;border-radius:12px;border:2px solid var(--line);font-family:var(--head);font-weight:700;font-size:14px;color:var(--mute);position:relative;transition:transform .15s}
+.qn:active{transform:scale(.9)}
+.qn.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.qn.bad{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.qn.cur{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-l)}
+.qn.fl::after{content:"";position:absolute;top:-4px;right:-4px;width:12px;height:12px;border-radius:50%;background:#ffa31a;border:2px solid #fff}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;font-weight:700;color:var(--mute);margin-bottom:16px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+/* ===== Result ===== */
+.hero{background:linear-gradient(160deg,var(--purple-m),var(--purple) 55%,var(--purple-d));color:#fff;border-radius:24px;padding:22px 18px;text-align:center;position:relative;overflow:hidden;box-shadow:0 14px 30px rgba(88,47,156,.3)}
+.hero::before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.07);right:-60px;top:-70px}
+.ring{width:132px;height:132px;position:relative;margin:8px auto 10px}
+.ring svg{transform:rotate(-90deg);width:100%;height:100%}
+.ring .pc{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:800;font-size:30px}
+.ring circle{fill:none;stroke-width:11;stroke-linecap:round}
+.ring .bg{stroke:rgba(255,255,255,.2)}.ring .fg{stroke:#5ee0d2;stroke-dasharray:352;stroke-dashoffset:352;transition:stroke-dashoffset 1.3s cubic-bezier(.2,.8,.2,1)}
+.hero h2{font-size:20px}.hero p{font-size:13px;opacity:.9;font-weight:600;margin-top:2px}
+.ptsget{display:inline-flex;gap:6px;align-items:center;margin-top:12px;background:rgba(255,255,255,.16);padding:7px 14px;border-radius:99px;font-family:var(--head);font-weight:700;font-size:14px;animation:spinIn .6s .9s both}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{background:#fff;border-radius:14px;padding:12px 4px;text-align:center;border:1px solid #eef0f6;animation:fadeUp .5s both}
+.stat b{font-family:var(--head);font-size:18px;display:block}.stat span{font-size:10.5px;color:var(--mute);font-weight:700}
+.tabs{display:flex;gap:8px;overflow-x:auto}.tabs::-webkit-scrollbar{height:0}
+.tab{padding:8px 14px;border-radius:99px;background:#fff;border:1.5px solid var(--line);font-size:12.5px;font-weight:800;color:var(--mute);white-space:nowrap;transition:all .2s}
+.tab.on{background:var(--purple);border-color:var(--purple);color:#fff}
+.ritem{background:#fff;border-radius:16px;border:1.5px solid var(--line);padding:14px;animation:fadeUp .4s both}
+.ritem.ok{border-color:#a8e6bf}.ritem.bad{border-color:#f5b5b5}.ritem.skip{border-color:#e1e3ee}
+.rhead{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.rnum{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--head);font-weight:700;font-size:12px}
+.ok .rnum{background:var(--ok-bg);color:var(--ok)}.bad .rnum{background:var(--bad-bg);color:var(--bad)}.skip .rnum{background:#eceef6;color:var(--mute)}
+.rtopic{font-size:11px;color:var(--mute);font-weight:700;flex:1;min-width:80px}
+.rq{font-size:13.5px;font-weight:700;line-height:1.6;white-space:pre-line;margin-bottom:10px}
+.abox{border-radius:11px;padding:10px 12px;font-size:12.5px;font-weight:600;line-height:1.55;margin-bottom:8px}
+.abox span{display:block;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.abox.u-ok{background:var(--ok-bg)}.abox.u-ok span{color:var(--ok)}
+.abox.u-bad{background:var(--bad-bg)}.abox.u-bad span{color:var(--bad)}
+.abox.u-skip{background:#eef0f6}.abox.u-skip span{color:var(--mute)}
+.abox.key{background:#e8f1ff}.abox.key span{color:#2563eb}
+.pemb{font-size:12.5px;line-height:1.65;color:#4a4f6e;font-weight:600;white-space:pre-line}
+.pemb b{display:block;font-family:var(--head);color:var(--ink);margin-bottom:3px;font-size:12.5px}
+details.rp{margin-bottom:10px;font-size:12.5px}details.rp summary{font-weight:800;color:var(--purple);cursor:pointer;margin-bottom:6px}
+details.rp div{background:var(--bg);padding:10px 12px;border-radius:10px;line-height:1.6;white-space:pre-line;font-weight:600;color:#3a3f5e;max-height:200px;overflow-y:auto}
+
+/* ===== History ===== */
+.hcard{padding:14px;display:flex;gap:12px;align-items:center;width:100%;text-align:left;transition:transform .15s,box-shadow .2s;animation:fadeUp .4s both}
+.hcard:hover{box-shadow:0 10px 22px rgba(88,47,156,.14);transform:translateY(-2px)}.hcard:active{transform:scale(.985)}
+.hcard .ic{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0}.hcard .ic svg{width:22px;height:22px}
+.hcard .b{flex:1;min-width:0}.hcard .b h4{font-size:14px}.hcard .b small{display:block;font-size:11.5px;color:var(--mute);font-weight:600;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.score{font-family:var(--head);font-weight:800;font-size:15px;padding:6px 10px;border-radius:10px;flex-shrink:0}
+.s-hi{background:#e3f8ec;color:#138a4a}.s-mid{background:#fff2dc;color:#b26a00}.s-lo{background:#ffe5e5;color:#c62828}
+.empty{text-align:center;padding:50px 24px;color:var(--mute);font-weight:600;font-size:13.5px;line-height:1.6}
+.empty .big{font-size:54px;margin-bottom:10px}.empty b{font-family:var(--head);color:var(--ink);font-size:16px;display:block;margin-bottom:6px}
+.toast{position:absolute;left:50%;bottom:90px;transform:translateX(-50%);background:#1f2340;color:#fff;padding:11px 18px;border-radius:99px;font-size:13px;font-weight:700;z-index:60;animation:fadeUp .3s;box-shadow:0 10px 24px rgba(0,0,0,.3);max-width:88%;text-align:center}
+.confetti{position:fixed;top:-12px;width:9px;height:14px;z-index:70;pointer-events:none;animation:fall linear forwards;border-radius:2px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ===== Penyesuaian Android WebView ===== */
+.app{height:100vh;height:100dvh}
+@media(max-width:499px){.app{max-height:none}}
+@media(min-width:500px){.app{height:92vh}}
+html,body{overscroll-behavior:none}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ================= HOME ================= -->
+<section class="view" id="v-home">
+  <div class="hdr">
+    <div class="hdr-top">
+      <div class="logo">ruang<br><b>guru</b></div>
+      <div class="who"><span>Kirana Gilang</span><div class="avatar">KG</div></div>
+    </div>
+    <div class="hdr-nav">
+      <button class="ibtn" onclick="closeMenus()" aria-label="Kembali"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg></button>
+      <div class="crumb">Home › Drill Soal</div>
+      <button class="kelas" onclick="toggleKelas(event)">Kelas 12 (TKA) <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg></button>
+    </div>
+  </div>
+  <div class="scroll" id="home-scroll">
+    <button class="banner enter-up" onclick="openSheet('sh-about')">
+      <span class="sp"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff"><path d="M12 2l1.8 5.4L19 9l-5.2 1.6L12 16l-1.8-5.4L5 9l5.2-1.6zM19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9z"/></svg></span>
+      <span style="flex:1">Cari tahu lebih dalam seputar Drill Soal</span>
+      <svg width="18" height="18" fill="none" stroke="#fff" viewBox="0 0 24 24" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <div class="card profile enter-up" style="animation-delay:.05s">
+      <div class="l">
+        <div class="pavatar"><svg width="28" height="28" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg></div>
+        <div><div class="pname">Kirana Gilang</div><div class="coin" style="margin-top:3px"><i></i><span id="home-points">0</span> Poin</div></div>
+      </div>
+      <button class="btn-line" onclick="showHistory()">Riwayat <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="sec-title enter-up" style="animation-delay:.1s">Mau Drill pelajaran apa hari ini?</div>
+    <div class="grid" id="subject-grid"></div>
+  </div>
+</section>
+
+<!-- ================= TOPICS ================= -->
+<section class="view hidden" id="v-topics">
+  <div class="hdr"><div class="hdr-nav" style="padding-top:14px">
+    <button class="ibtn" onclick="goHome()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg></button>
+    <div class="crumb" id="topics-title">Pilih Topik</div>
+  </div></div>
+  <div class="scroll">
+    <div class="search"><svg width="18" height="18" fill="none" stroke="#9aa0bb" viewBox="0 0 24 24" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg><input id="topic-q" placeholder="Cari topik…" oninput="renderTopics()"></div>
+    <div class="rowline"><span style="font-weight:800;font-size:13px;color:var(--mute)" id="topic-count"></span><button class="link" onclick="toggleAllTopics()" id="btn-all">Pilih Semua</button></div>
+    <div id="topic-list" style="display:flex;flex-direction:column;gap:10px"></div>
+  </div>
+  <div class="foot"><div class="info" id="topic-info">Pilih minimal 1 topik</div><button class="btn" id="btn-setup" onclick="openSetup()" disabled>Atur Drill</button></div>
+</section>
+
+<!-- ================= DRILL ================= -->
+<section class="view hidden" id="v-drill">
+  <div class="dtop">
+    <button class="ibtn" onclick="askExit()" aria-label="Keluar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.6"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    <div class="tt"><b id="d-subject">Matematika</b><small id="d-topics"></small></div>
+    <div class="coin" style="background:rgba(255,255,255,.16);padding:6px 10px;border-radius:99px;color:#ffe08a"><i></i><span id="d-points">0</span></div>
+    <div class="tpill" id="d-tpill"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><circle cx="12" cy="13" r="8"/><path stroke-linecap="round" d="M12 9v4l2.5 2M9 2h6"/></svg><span id="d-timer">00:00</span></div>
+  </div>
+  <div class="pbar"><i id="d-bar"></i></div>
+  <div class="scroll" id="d-scroll">
+    <div class="qmeta">
+      <span class="qno" id="d-qno">Soal 1 dari 10</span><span class="chip d2" id="d-diff">Sedang</span><span class="sp"></span>
+      <button class="tool" id="d-flag" onclick="toggleFlag()" aria-label="Ragu-ragu"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg></button>
+      <button class="tool" onclick="openNav()" aria-label="Daftar soal"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+    </div>
+    <div id="d-passage-wrap"></div>
+    <div class="qtext" id="d-question"></div>
+    <div id="d-hint"></div>
+    <div class="opts" id="d-opts"></div>
+    <div id="d-fb"></div>
+    <div style="height:6px"></div>
+  </div>
+  <div class="foot">
+    <button class="btn ghost" id="d-skip" style="padding:13px 18px" onclick="skipQ()">Lewati</button>
+    <button class="btn" id="d-main" style="flex:1" onclick="mainAction()" disabled>Cek Jawaban</button>
+  </div>
+</section>
+
+<!-- ================= RESULT ================= -->
+<section class="view hidden" id="v-result">
+  <div class="hdr"><div class="hdr-nav" style="padding-top:14px">
+    <button class="ibtn" onclick="resultBack()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg></button>
+    <div class="crumb" id="r-title">Hasil Drill</div>
+  </div></div>
+  <div class="scroll" id="r-scroll">
+    <div class="hero">
+      <div class="ring"><svg viewBox="0 0 132 132"><circle class="bg" cx="66" cy="66" r="56"/><circle class="fg" id="r-ring" cx="66" cy="66" r="56"/></svg><div class="pc"><span id="r-pc">0</span>%</div></div>
+      <h2 id="r-msg">Drill Selesai!</h2><p id="r-sub"></p>
+      <div class="ptsget"><span class="coin" style="color:#ffe08a"><i></i></span><span id="r-pts">+0 Poin</span></div>
+    </div>
+    <div class="stats" id="r-stats"></div>
+    <div class="sec-title">Pembahasan Soal</div>
+    <div class="tabs" id="r-tabs"></div>
+    <div id="r-list" style="display:flex;flex-direction:column;gap:12px"></div>
+  </div>
+  <div class="foot" id="r-foot"></div>
+</section>
+
+<!-- ================= HISTORY ================= -->
+<section class="view hidden" id="v-history">
+  <div class="hdr"><div class="hdr-nav" style="padding-top:14px">
+    <button class="ibtn" onclick="goHome()"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg></button>
+    <div class="crumb">Riwayat Pengerjaan</div>
+    <button class="ibtn" onclick="askClearHistory()" aria-label="Hapus riwayat" id="btn-clear-h"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-1 13H6L5 7m5 4v6m4-6v6M4 7h16M9 7V4h6v3"/></svg></button>
+  </div></div>
+  <div class="scroll" id="h-scroll"></div>
+</section>
+
+<!-- Overlays -->
+<div id="overlay" class="backdrop hidden" onclick="overlayClick(event)"></div>
+<div id="kelas-menu" class="pop-menu hidden">
+  <button>Kelas 12 (TKA) ✓</button><button disabled>Kelas 11 · segera hadir</button><button disabled>Kelas 10 · segera hadir</button>
+</div>
+</div>
+<script>
+
+const S = (question, options, answer, pembahasan, extra = {}) => ({ type: 'single', question, options, answer, pembahasan, ...extra });
+const M = (question, options, answer, pembahasan, extra = {}) => ({ type: 'multi', question, options, answer, pembahasan, ...extra });
+const T = (question, statements, answer, pembahasan, labels = ['Benar', 'Salah'], extra = {}) => ({ type: 'tf', question, statements, answer, labels, pembahasan, ...extra });
+const DS = [
+  `Pernyataan (1) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (2) SAJA tidak cukup`,
+  `Pernyataan (2) SAJA cukup untuk menjawab pertanyaan, tetapi pernyataan (1) SAJA tidak cukup`,
+  `DUA pernyataan BERSAMA-SAMA cukup untuk menjawab pertanyaan, tetapi SATU pernyataan SAJA tidak cukup`,
+  `Pernyataan (1) SAJA cukup untuk menjawab pertanyaan dan pernyataan (2) SAJA cukup`,
+  `Pernyataan (1) dan pernyataan (2) tidak cukup untuk menjawab pertanyaan`
+];
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const LABELS = ['A', 'B', 'C', 'D', 'E'];
+const MATEMATIKA = [
+M(`Misalkan #, $, dan @ menyatakan operasi penjumlahan (+), pengurangan (−), perkalian (×), atau pembagian ( : ). Agar 125^(1/3) # 81^(1/4) $ 8^(1/3) @ 25^(1/2) < 3 bernilai benar, pasangan berikut yang benar untuk ( #, $, dan @ ) adalah … (Pilihan jawaban yang benar lebih dari satu)`,
+ [`( +, ×, : )`,`( +, :, − )`,`( −, ×, : )`,`( −, +, : )`,`( ×, :, + )`],[1,3],
+ `Nilai: 125^(1/3)=5, 81^(1/4)=3, 8^(1/3)=2, 25^(1/2)=5, sehingga bentuknya 5 # 3 $ 2 @ 5 < 3. (A) 5+3×2:5 = 6,2 ✗. (B) 5+3:2−5 = 1,5 ✓. (C) 5−3×2:5 = 3,8 ✗. (D) 5−3+2:5 = 2,4 ✓. (E) 5×3:2+5 = 12,5 ✗. Jawaban: B dan D.`),
+
+S(`Bentuk sederhana dari (3^(5/6) · 12^(7/12)) / (6^(2/3) · 2^(−1/4)) adalah ….`,
+ [`6^(1/4)`,`6^(3/4)`,`6^(3/2)`,`(2/3)^(3/4)`,`(3/2)^(3/4)`],1,
+ `Pembilang = 3^(5/6)·(2²·3)^(7/12) = 3^(17/12)·2^(7/6). Penyebut = 2^(2/3)·3^(2/3)·2^(−1/4) = 2^(5/12)·3^(2/3). Hasil = 3^(9/12)·2^(9/12) = 6^(3/4).`),
+
+S(`Uang Adinda Rp 40.000,00 lebih banyak dari uang Binary ditambah dua kali uang Cindy. Jumlah uang Adinda, Binary dan Cindy Rp 200.000,00. Selisih uang Binary dan Cindy Rp 10.000,00. Jumlah uang Adinda dan Binary adalah …..`,
+ [`Rp 122.000,00`,`Rp 126.000,00`,`Rp 156.000,00`,`Rp 162.000,00`,`Rp 172.000,00`],4,
+ `A = B + 2C + 40.000 dan A + B + C = 200.000, sehingga 2B + 3C = 160.000. Jika B − C = 10.000 maka C = 28.000, B = 38.000, A = 134.000. Maka A + B = Rp172.000. (Kasus C − B = 10.000 menghasilkan A + B = 164.000 yang tidak ada di pilihan.)`),
+
+M(`Tagihan listrik bulanan di sebuah apartemen dihitung berdasarkan jumlah energi listrik (dalam kWh) yang digunakan. Biaya tagihan dihitung dengan rumus f(x) = 1350x + 25.000, dengan f(x): total tagihan listrik (rupiah) dan x: jumlah pemakaian energi listrik (kWh).\n\nDaffa bulan ini membayar Rp160.000,00. Ia menyadari bahwa penggunaan listrik sebulan terakhir lebih dari penggunaan biasanya. Berdasarkan informasi tersebut, biasanya besar penggunaan listrik di apartemen Daffa adalah … (pilihan jawaban yang benar lebih dari satu)`,
+ [`85 kWh`,`90 kWh`,`100 kWh`,`120 kWh`,`135 kWh`],[0,1],
+ `1350x + 25.000 = 160.000 → x = 100 kWh (bulan ini). Karena bulan ini lebih banyak dari biasanya, pemakaian biasanya harus kurang dari 100 kWh, yaitu 85 kWh dan 90 kWh.`),
+
+S(`Nilai maksimum dari f(x, y) = 4x + 28y yang memenuhi syarat 5x + 4y ≤ 34 ; 3x + 5y ≤ 30 ; x ≥ 0 dan y ≥ 0 adalah ….`,
+ [`104`,`152`,`168`,`208`,`250`],2,
+ `Titik pojok daerah layak: (0,0) → 0; (6,8; 0) → 27,2; (0, 6) → 168; titik potong kedua garis (50/13, 48/13) → ≈118,8. Nilai maksimum = 168 di titik (0, 6).`),
+
+T(`Pesawat penumpang mempunyai tempat duduk 48 kursi. Setiap penumpang kelas utama boleh membawa bagasi 60 kg sedangkan kelas ekonomi membawa bagasi 20 kg. Pesawat hanya dapat membawa bagasi 1440 kg. Harga tiket kelas utama Rp 1.500.000,00 dan kelas ekonomi Rp 1.000.000,00. Supaya pendapatan dari penjualan tiket pada saat pesawat penuh mencapai maksimum, tentukan Benar atau Salah untuk setiap pernyataan.`,
+ [`Jumlah tempat duduk utama yang terjual sebanyak 12 kursi`,`Tempat duduk utama harus terjual lebih banyak daripada tempat duduk ekonomi`,`Keuntungan maksimum dari penjualan tiket adalah 54 juta rupiah`],[0,1,0],
+ `Misal utama = x, ekonomi = y. Pesawat penuh: x + y = 48. Bagasi: 60x + 20y ≤ 1440 → 3x + y ≤ 72 → 2x ≤ 24 → x ≤ 12. Pendapatan = 1,5x + (48 − x) = 48 + 0,5x (juta), maksimum saat x = 12 → Rp54 juta. Jadi: (1) Benar; (2) Salah, karena utama 12 < ekonomi 36; (3) Benar.`),
+
+T(`Diketahui fungsi f(x) = 1 – x² dan g(x) = √(5 − x). Tentukan Benar atau Salah untuk setiap pernyataan.`,
+ [`f(1) = g(1)`,`6 merupakan domain dari f ∘ g`,`1 merupakan range dari f ∘ g`],[1,1,0],
+ `(1) f(1) = 0 sedangkan g(1) = 2 → Salah. (2) (f∘g)(x) = 1 − (5 − x) = x − 4 dengan domain x ≤ 5, sehingga 6 bukan domain → Salah. (3) Range: x ≤ 5 → x − 4 ≤ 1, jadi 1 termasuk range (saat x = 5) → Benar.`),
+
+S(`Untuk menambah uang saku, Farrel berniat membantu kakaknya berjualan makanan. Farrel akan mendapatkan uang saku berdasarkan jumlah makanan yang terjual pada hari tersebut dengan fungsi P(x) = 1.000x + 200, dengan P adalah uang saku dalam rupiah dan x adalah jumlah makanan yang terjual. Ternyata jumlah makanan yang terjual bergantung pada waktu yang digunakan Farrel untuk berjualan dengan x = f(t) = 3t + 2, dengan t adalah waktu dalam jam. Uang saku yang diperoleh Farrel jika ia berjualan selama 3 jam pada suatu hari libur adalah ....`,
+ [`Rp11.500,00`,`Rp11.200,00`,`Rp10.500,00`,`Rp10.200,00`,`Rp9.500,00`],1,
+ `x = f(3) = 3(3) + 2 = 11. P(11) = 1.000(11) + 200 = Rp11.200.`),
+
+S(`Diketahui fungsi f(x) = 2x + 1 dan g(x) = (x + 1)/x, x ≠ 0. Invers (f∘g)(x) adalah (f∘g)⁻¹(x) = …`,
+ [`2x/(x − 3), x ≠ 3`,`2x/(x + 3), x ≠ −3`,`2/(x − 3), x ≠ 3`,`2/(x + 3), x ≠ −3`,`(x − 2)/(x + 3), x ≠ −3`],2,
+ `(f∘g)(x) = 2(x+1)/x + 1 = (3x + 2)/x. Misal y = (3x + 2)/x → xy = 3x + 2 → x(y − 3) = 2 → x = 2/(y − 3). Jadi (f∘g)⁻¹(x) = 2/(x − 3), x ≠ 3.`),
+
+S(`Jika grafik fungsi kuadrat f(x) = ax² + bx + c mempunyai titik puncak (8,4) dan memotong sumbu-x negatif maka …`,
+ [`a > 0, b > 0 dan c > 0`,`a < 0, b < 0 dan c > 0`,`a < 0, b > 0 dan c < 0`,`a > 0, b > 0 dan c < 0`,`a < 0, b > 0 dan c > 0`],4,
+ `Puncak (8,4) berada di atas sumbu-x dan grafik memotong sumbu-x, maka parabola terbuka ke bawah (a < 0). Sumbu simetri x = −b/2a = 8 → b = −16a > 0. Grafik memotong sumbu-x negatif dan akar lainnya positif (> 16), sehingga x = 0 berada di antara kedua akar → f(0) = c > 0. Jadi a < 0, b > 0, c > 0.`),
+
+S(`Lavenia menabung di sebuah koperasi sebesar Rp2.000.000,00 dengan suku bunga tunggal 6% pertahun. Pada saat diambil, uang Lavenia menjadi Rp2.080.000,00. Lama Lavenia menabung adalah …`,
+ [`6 bulan`,`7 bulan`,`8 bulan`,`9 bulan`,`10 bulan`],2,
+ `Bunga = 2.080.000 − 2.000.000 = Rp80.000. Bunga 1 tahun = 6% × 2.000.000 = Rp120.000, jadi bunga 1 bulan = Rp10.000. Lama = 80.000 / 10.000 = 8 bulan.`),
+
+S(`Pada saat awal diamati 8 virus jenis tertentu. Setiap 24 jam masing-masing virus membelah diri menjadi dua. Jika setiap 96 jam seperempat dari seluruh virus dibunuh, maka banyaknya virus pada hari keenam adalah ...`,
+ [`96`,`128`,`192`,`224`,`256`],2,
+ `Hari ke-1 (awal): 8. Setelah 24 jam: 16; 48 jam: 32; 72 jam: 64; 96 jam: 128 lalu seperempatnya dibunuh → 128 × 3/4 = 96. Setelah 120 jam (hari keenam): 96 × 2 = 192.`),
+
+T(`Fungsi f didefinisikan oleh f(x) = 4(x² − 8x + 12). Tentukan Benar atau Salah untuk setiap pernyataan.`,
+ [`Grafik fungsi f berpuncak di kuadran empat`,`Grafik fungsi f memotong garis y = −18`,`Grafik fungsi f tidak melalui kuadran tiga`],[0,1,0],
+ `f(x) = 4(x − 2)(x − 6) = 4(x − 4)² − 16. (1) Titik puncak (4, −16) berada di kuadran IV → Benar. (2) Nilai minimum −16 > −18, sehingga tidak pernah memotong y = −18 → Salah. (3) Untuk x < 0, nilai f selalu positif (akar 2 dan 6, f(0) = 48), jadi tidak melalui kuadran III → Benar.`),
+
+S(`Pada bangun di bawah, garis AE berpotongan dengan garis BD di C. Berapakah x − y?\n\n[Gambar: A di kiri atas, B di kiri bawah, D di kanan atas, E di kanan bawah, dan C adalah titik potong AE dan BD. x° adalah sudut di titik A pada segitiga ABC, sedangkan y° adalah sudut DCE pada segitiga CDE.]\n\nPutuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.\n(1) AB = BC = AC\n(2) DE = EC = DC`,
+ DS,0,
+ `Sudut DCE bertolak belakang dengan sudut ACB, sehingga y = ∠ACB. Dari (1) segitiga ABC sama sisi → x = 60° dan ∠ACB = 60° → y = 60°, maka x − y = 0 (cukup). Dari (2) segitiga CDE sama sisi → y = 60° saja, nilai x tidak diketahui (tidak cukup). Jadi (1) SAJA cukup.`),
+
+S(`Segitiga ABC dan segitiga CAD sebangun.\n\n[Gambar: A(0, 14) kiri atas, B(4, 14) kanan atas, C(0, 8) kiri bawah, dan D di kanan bawah (sejajar C secara mendatar). Garis AD dan BC saling berpotongan.]\n\nJika (p, q) merupakan koordinat titik D, nilai p + q adalah ...`,
+ [`14`,`15`,`16`,`17`,`18`],3,
+ `AB = 4 dan AC = 6, siku-siku di A. Segitiga CAD siku-siku di C sehingga q = 8. Dengan kesebangunan A↔C, B↔A, C↔D: AB/CA = AC/CD → 4/6 = 6/CD → CD = 9, sehingga D(9, 8). p + q = 17.`),
+
+S(`Pada balok ABCD.EFGH, AB = 9 cm, BC = 4 cm, dan CG = 6 cm. Titik K adalah perpotongan diagonal bidang ADHE. Titik L terletak pada GH dengan LH = 2 GL. Jarak dari L ke K adalah ....cm`,
+ [`9`,`8`,`7,5`,`7`,`6`],3,
+ `Pasang koordinat A(0,0,0), B(9,0,0), D(0,4,0), E(0,0,6). K = pusat bidang ADHE = (0, 2, 3). GH = 9 dengan LH = 2 GL → GL = 3 sehingga L = (6, 4, 6). KL = √(6² + 2² + 3²) = √49 = 7 cm.`),
+
+S(`Diketahui balok ABCD.EFGH dan limas P.EFGH. Berapa volume limas P.EFGH?\n\n[Gambar: limas P.EFGH berdiri di atas bidang atas EFGH balok ABCD.EFGH.]\n\nPutuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.\n(1) Volume balok ABCD.EFGH = 8\n(2) AB = BC = EP = FP = GP = HP = 2`,
+ DS,1,
+ `(1) Hanya memberi volume balok; tinggi limas tidak diketahui → tidak cukup. (2) Alas EFGH persegi sisi 2, rusuk tegak 2, sehingga tinggi limas = √(4 − 2) = √2 dan V = 1/3 × 4 × √2 → cukup. Jadi (2) SAJA cukup.`),
+
+S(`Pada trapesium siku-siku pada gambar di bawah, AB = 3 cm dan AD < BC. Apakah keliling trapesium tersebut lebih dari 25?\n\n[Gambar: A kiri atas, D kanan atas, B kiri bawah, C kanan bawah; siku-siku di A dan B; AB tegak di sisi kiri.]\n\nPutuskan apakah pernyataan (1) dan (2) berikut cukup untuk menjawab pertanyaan tersebut.\n(1) Luas trapesium ABCD = 24 cm²\n(2) BC = 10 cm dan CD = 5 cm`,
+ DS,1,
+ `(1) Luas 24 → AD + BC = 16, tetapi CD = √(9 + (BC − AD)²) tidak tunggal (bisa 5 atau ≈10,4) sehingga keliling bisa 24 atau ≈29,4 → tidak cukup. (2) BC − AD = √(25 − 9) = 4 → AD = 6, keliling = 3 + 6 + 10 + 5 = 24, tidak lebih dari 25 → jawabannya pasti (Tidak) → cukup. Jadi (2) SAJA cukup.`),
+
+S(`Diketahui kubus ABCD.EFGH dengan panjang rusuk 8 cm. M adalah titik tengah EH. Jarak M ke AG adalah… cm`,
+ [`4√6`,`4√5`,`4√3`,`4√2`,`4`],3,
+ `Koordinat A(0,0,0), E(0,0,8), H(0,8,8) → M(0,4,8); AG searah (1,1,1). Jarak = |AM × u| / |u| = |(−4, 8, −4)| / √3 = √96 / √3 = √32 = 4√2 cm.`),
+
+T(`Pada kubus ABCD.EFGH panjang rusuk 4 cm dengan P, Q, dan R berturut-turut titik tengah rusuk AE, CG, dan DH. Tentukan Benar atau Salah untuk setiap pernyataan.`,
+ [`Jarak dari titik C ke bidang AFH sama dengan jarak titik C ke titik berat segitiga AFH`,`Jarak titik P ke bidang ERQF sama dengan jarak titik P ke titik tengah bidang ERQF`,`Garis PQ dan garis ER adalah dua garis yang saling bersilangan`],[0,1,0],
+ `(1) Diagonal ruang CE tegak lurus bidang AFH dan melalui titik berat segitiga AFH, sehingga jarak C ke bidang = jarak C ke titik berat → Benar. (2) Bidang ERQF: y + 2z = 8; jarak P(0,0,2) ke bidang = 4/√5 ≈ 1,79, sedangkan jarak P ke titik tengah (2,2,3) = 3 → Salah. (3) PQ arah (1,1,0) dan ER arah (0,4,−2) tidak sejajar dan tidak berpotongan → bersilangan → Benar.`),
+
+S(`Bayangan segitiga ABC dengan A(2, 1), B(6, 2) dan C(5, 4) jika dicerminkan terhadap sumbu Y dilanjutkan dengan rotasi (O, 90°) adalah…`,
+ [`A″(−2,−1), B″(−6,−2), C″(−5,−4)`,`A″(−1,−2), B″(−2,−6), C″(−4,−5)`,`A″(1,−2), B″(2,−6), C″(4,−5)`,`A″(2, 1), B″(2, 6), C″(4, 5)`,`A″(2, 1), B″(6, 2), C″(5, 4)`],1,
+ `Cermin terhadap sumbu Y: (x, y) → (−x, y). Rotasi 90° berlawanan arah jarum jam: (x, y) → (−y, x). A(2,1) → (−2,1) → (−1,−2); B(6,2) → (−6,2) → (−2,−6); C(5,4) → (−5,4) → (−4,−5).`),
+
+S(`Jika diketahui sin x = a dan x merupakan sudut tumpul, nilai sec x adalah ...`,
+ [`a/√(1 + a²)`,`a/√(1 − a²)`,`1/√(1 − a²)`,`−a/√(1 − a²)`,`−1/√(1 − a²)`],4,
+ `Sudut tumpul berada di kuadran II sehingga cos x negatif: cos x = −√(1 − a²). Maka sec x = 1/cos x = −1/√(1 − a²).`),
+
+S(`Seorang anak tingginya 1,55 meter berdiri pada jarak 12 meter dari kaki tiang bendera. Ia melihat puncak tiang bendera dengan sudut 45° dengan arah mendatar, maka tinggi tiang bendera itu adalah…`,
+ [`12√2 meter`,`12,55 meter`,`13,55 meter`,`14,55 meter`,`15,55 meter`],2,
+ `Tinggi di atas mata anak = 12 × tan 45° = 12 m. Tinggi tiang = 12 + 1,55 = 13,55 meter.`),
+
+S(`Bilangan-bilangan bulat a, a+1, a+1, 7, b, b, 9 telah diurutkan dari terkecil ke terbesar. Jika rata-rata semua bilangan itu adalah 7 dan simpangan rata-ratanya 8/7, maka nilai a + b = …`,
+ [`10`,`11`,`12`,`13`,`14`],3,
+ `Jumlah = 7 × 7 = 49 → 3a + 2b + 18 = 49 → 3a + 2b = 31. Dengan a + 1 ≤ 7 ≤ b ≤ 9 dan bilangan bulat, hanya a = 5, b = 8 yang memenuhi. Data 5, 6, 6, 7, 8, 8, 9 → simpangan rata-rata = (2+1+1+0+1+1+2)/7 = 8/7 ✓. a + b = 13.`),
+
+S(`Nilai rata-rata matematika di suatu kelas yang jumlah siswanya 22 orang adalah 5 dengan jangkauan 4. Jika nilai siswa yang paling rendah dan yang paling tinggi tidak disertakan, maka nilai rata-ratanya berubah menjadi 4,9. Nilai siswa yang tertinggi adalah ....`,
+ [`6`,`7`,`7,5`,`8`,`9`],3,
+ `Total awal = 22 × 5 = 110. Total tanpa nilai terendah dan tertinggi = 20 × 4,9 = 98. Maka min + maks = 12. Jangkauan: maks − min = 4. Jumlahkan: 2·maks = 16 → maks = 8.`),
+
+S(`Perhatikan tabel berikut (Berat dalam kg : Frekuensi):\n31 – 36 : 4\n37 – 42 : 6\n43 – 48 : 9\n49 – 54 : 14\n55 – 60 : 10\n61 – 66 : 5\n67 – 72 : 2\n\nModus data pada tabel tersebut adalah …`,
+ [`49,06 kg`,`50,20 kg`,`50,70 kg`,`51,33 kg`,`51,83 kg`],4,
+ `Kelas modus = 49 – 54 (frekuensi 14). Tepi bawah = 48,5; panjang kelas = 6; d₁ = 14 − 9 = 5; d₂ = 14 − 10 = 4. Mo = 48,5 + 6 × 5/(5 + 4) = 48,5 + 3,33 = 51,83 kg.`),
+
+S(`Suatu sekolah membentuk team delegasi yang terdiri dari 4 anak kelas X, 5 anak kelas XI dan 6 anak kelas XII. Kemudian akan ditentukan pimpinan yang terdiri dari ketua, wakil ketua dan sekretaris. Jika kelas asal ketua harus lebih tinggi dari kelas asal wakil ketua dan sekretaris, maka banyaknya kemungkinan susunan pimpinan adalah…`,
+ [`156`,`492`,`546`,`600`,`720`],1,
+ `Ketua kelas XII (6 orang): wakil dan sekretaris dari kelas X/XI (9 orang) → 6 × 9 × 8 = 432. Ketua kelas XI (5 orang): wakil dan sekretaris dari kelas X (4 orang) → 5 × 4 × 3 = 60. Total = 432 + 60 = 492.`),
+
+T(`Dalam suatu kelas terdapat 6 murid laki-laki dan 9 murid perempuan. Akan dipilih pengurus inti kelas yang terdiri dari 5 murid. Tentukan Benar (B) atau Salah (S) untuk setiap pernyataan.`,
+ [`Banyaknya cara memilih sehingga semua pengurus inti merupakan murid perempuan adalah 189`,`Banyaknya cara memilih sehingga semua pengurus inti merupakan murid laki-laki adalah 30`,`Banyaknya cara memilih sehingga terdapat tepat 2 murid laki-laki sebagai pengurus inti adalah 1.260`],[1,1,0],
+ `(1) C(9,5) = 126, bukan 189 → Salah. (2) C(6,5) = 6, bukan 30 → Salah. (3) C(6,2) × C(9,3) = 15 × 84 = 1.260 → Benar.`),
+
+S(`A, B, C dan D akan berfoto bersama secara berdampingan. Peluang A dan B selalu berdampingan adalah…`,
+ [`1/12`,`1/6`,`1/3`,`1/2`,`2/3`],3,
+ `Semua susunan = 4! = 24. A dan B dianggap satu blok: 3! × 2! = 12 susunan. Peluang = 12/24 = 1/2.`),
+
+S(`Pada sebuah toko seluler terdapat 10 telepon genggam dalam kondisi baik dan 2 telepon genggam dalam kondisi rusak pada satu kemasan kardus. Untuk mendapatkan telepon genggam yang rusak, dilakukan pengujian dengan cara mengambil dan menguji satu per satu secara acak tanpa pengembalian. Peluang diperoleh 2 telepon genggam rusak pada dua pengujian yang pertama adalah …`,
+ [`1 / 132`,`1 / 72`,`1 / 66`,`1 / 36`,`1 / 6`],2,
+ `P = (2/12) × (1/11) = 2/132 = 1/66.`)
+];
+
+const P_INFO = `[Infografik “PANEN AIR HUJAN MULAI DARI SEKARANG” — ringkasan teks dari gambar di PDF, cek kembali dengan PDF asli bila perlu]
+
+Curah hujan yang tinggi saat musim hujan sebenarnya dapat memenuhi kebutuhan air bagi masyarakat dan sektor komersial di Jakarta. Sayangnya, masyarakat memiliki kebiasaan membuang air hujan dan tidak pernah menampungnya. Mengubah kebiasaan menampung air hujan ke dalam tanah bisa menjadi solusi krisis air tanah. Salah satu caranya adalah dengan membuat sumur resapan.
+
+KETENTUAN: sumur berada pada lahan yang datar (bukan tanah berlereng, curam, atau labil); jarak minimal sumur dengan tempat pembuangan sampah dan septic tank 5 meter diukur dari tepi; penggalian sumur resapan paling dalam 2 meter di bawah permukaan air tanah; tanah tempat sumur dibuat mampu menyerap air ≥ 2 cm/jam.
+
+CARA: memasang sumur resapan yang telah jadi, atau membuat sendiri sumur resapan. BIAYA: Rp 4–7 juta.
+
+Langkah membuat sendiri: (1) buat sumur; (2) perkuat dinding sumur (bis beton / pasangan bata kosong); (3) isi lubang sumur dengan ijuk, batu pecah, dan pecahan bata; (4) tutup bagian atas sumur dengan pelat beton; (5) hubungkan talang air hujan ke sumur; (6) buat saluran pembuangan dari sumur resapan menuju parit untuk kelebihan air; (7) pemeriksaan jelang musim hujan, setidaknya tiga tahun sekali.
+
+Gambar potongan sumur: diameter sumur 80–100 cm, kedalaman sumur 1,5 m, tebal lapisan 15 cm, dilengkapi saringan sampah dan bak pengendap lumpur.`;
+
+const P_LASKAR = `Bu Mus adalah seorang guru yang pandai, kharismatik, dan memiliki pandangan jauh ke depan. Beliau menyusun sendiri silabus pelajaran Budi Pekerti dan mengajarkan kepada kami sejak dini pandangan-pandangan dasar moral, demokrasi, hukum, keadilan, dan hak-hak asasi—jauh hari sebelum orang-orang sekarang meributkan soal materialisme versus pembangunan spiritual dalam pendidikan. Kami diajarkan menggali nilai luhur di dalam diri sendiri agar berperilaku baik karena kesadaran pribadi.
+
+Pada suatu kesempatan, karena masih kecil tentu saja, kami sering mengeluh mengapa sekolah kami tak seperti sekolah-sekolah lain. Terutama, atap sekolah yang bocor dan sangat menyusahkan saat musim hujan. Beliau tak menanggapi keluhan itu, tapi mengeluarkan sebuah buku berbahasa Belanda dan memperlihatkan sebuah gambar.
+
+Gambar itu adalah sebuah ruangan yang sempit, dikelilingi tembok tebal yang suram, tinggi, gelap, dan berjeruji. Kesan di dalamnya begitu pengap, angker, penuh kekerasan dan kesedihan. “Inilah sel Pak Karno di sebuah penjara di Bandung, di sini Beliau menjalani hukuman dan setiap hari belajar, setiap waktu membaca buku. Beliau adalah salah satu orang tercerdas yang pernah dimiliki bangsa ini.” Bu Mus tak melanjutkan ceritanya.
+
+Kami tersihir dalam senyap. Mulai saat itu, kami tak pernah memprotes keadaan sekolah kami. Pernah suatu ketika hujan turun sangat lebat, petir sambar-menyambar. Trapani dan Mahar memakai terindak, topi kerucut dari daun lais khas tentara Vietkong, untuk melindungi jambul mereka. Kucai, Borek, dan Sahara memakai jas hujan kuning bergambar gerigi metal besar di punggungnya dengan tulisan besar “UPT Bel” (Unit Penambangan Timah Belitong)—jas hujan PT Timah milik bapaknya. Kami sisanya hampir basah kuyup. Tapi kami sehari pun tak pernah bolos dan kami tak pernah mengeluh, tidak, sedikit pun kami tak pernah mengeluh.
+
+(Diadaptasi dari Laskar Pelangi karya Andrea Hirata)`;
+
+const P_PAUD = `Pak Budiman sedang mengajarkan teks informasi ke siswanya. Beliau memberikan contoh teks informasi seperti artikel di bawah ini.
+
+(1) Pendidikan anak usia dini (PAUD) adalah suatu upaya pembinaan yang ditujukan kepada anak sejak lahir sampai dengan usia enam tahun yang dilakukan melalui pemberian rangsangan pendidikan. (2) Hal ini merupakan bentuk bantuan bagi pertumbuhan dan perkembangan jasmani dan rohani agar anak memiliki kesiapan dalam memasuki pendidikan lebih lanjut. (3) Tujuan utamanya adalah untuk membentuk anak Indonesia yang berkualitas, yakni anak yang tumbuh dan berkembang sesuai dengan tingkat perkembangannya sehingga memiliki kesiapan yang ideal dalam memasuki pendidikan dasar, serta mengarungi kehidupan setelah dewasa kelak.
+
+(1) Menurut Prof. Dr. Lydia Freyani, selaku Dewan Guru Besar Fakultas Psikologi Universitas Indonesia, kegiatan di PAUD dapat memberi rangsangan atau stimulasi pendidikan yang sesuai dengan tahap tumbuh kembang anak usia prasekolah. (2) Seluruh aktivitasnya dilakukan melalui pendekatan bermain sambil belajar. (3) Selain memberikan kesempatan pada anak untuk mengenal sekolah, kegiatan-kegiatan di PAUD juga menanamkan kejujuran, kedisiplinan, dan berbagai hal positif lain. (4) Anak yang sebelumnya mendapatkan pendidikan di PAUD sering kali memiliki kemampuan untuk komunikasi lebih baik saat sekolah. (5) Hal ini disebabkan ia sudah terbiasa untuk bermain, belajar, hingga makan bersama dengan teman yang memiliki usia sebaya.
+
+Dalam memilih PAUD, seperti dikutip dari National Association for the Education of Young Children (NAEYC), menyarankan untuk memperhatikan ciri PAUD yang baik, yakni
+1) Anak-anak dapat menghabiskan hampir seluruh waktu mereka untuk bermain, baik membuat sesuatu maupun bermain dengan temannya.
+2) Anak diberikan berbagai aktivitas sepanjang hari. Untuk itu, meminta jadwal kegiatan kelas sehari-hari juga penting sehingga orang tua dapat menilai apakah kegiatan di kelas membosankan atau tidak untuk anak.
+3) Lihat hiasan di dalam kelas, sebab idealnya karya anak-anaklah yang dipajang untuk menghias kelas, sehingga anak pun merasa bangga dan bersemangat.
+4) Kurikulum dapat diadaptasi untuk anak yang lebih cepat belajar, dan/atau juga untuk anak yang membutuhkan bantuan lebih untuk belajar.
+5) Para guru dapat mengetahui bahwa latar belakang, pengalaman, dan kemampuan setiap anak berbeda sebab setiap anak punya cara belajar yang berbeda satu dengan lainnya.
+6) Sarana dan prasarana juga menjadi hal yang tidak kalah pentingnya karena itulah yang nantinya akan menjadi penunjang pendidikan anak di PAUD tersebut.
+
+(Diadaptasi dari https://pauddikmasdiy.kemdikbud.go.id)`;
+
+const P_TANAH = `(1) Mafia tanah diperingatkan agar jangan main-main dengan sengketa tanah sebab bisa menjadi bom waktu pada kemudian hari. (2) Persoalan tanah harus diwaspadai karena berpotensi menimbulkan konflik antarwarga, warga dengan pengusaha, bahkan warga dengan aparat keamanan. (3) Melihat tingginya kasus tanah dan potensi konflik di berbagai daerah, usul pembentukan tim terpadu kasus sengketa tanah perlu direspons. (4) Tim dibentuk untuk [….] (5) Bila sudah terdapat pola dan dapat dipetakan, langkah berikutnya adalah mencari solusi yang dapat dijadikan sebagai pedoman bersama. (6) Untuk kasus-kasus yang dapat memicu konflik langsung ditangani agar tidak menjadi konflik terbuka.
+
+(1) Berbagai pihak menyebutkan bahwa mencuatnya persoalan pertanahan tidak terlepas dari ketidaktegasan pemerintah serta tidak adanya instrumen hukum yang jelas. (2) Praktis hukum selalu mempertanyakan alasan rakyat menggarap tanah: apakah karena turun-temurun atau karena ada landasan hukumnya? (3) Sebaliknya, sudah seharusnya dibuatkan instrumen hukum sehingga ada pedoman dalam menyelesaikan kasus tanah garapan.
+
+(1) Mengingat tingginya potensi konflik persoalan tanah, masyarakat yakin jika seluruh komponen yang ada di tengah masyarakat bersatu memiliki tekad yang sama dalam menyelesaikan persoalan, masalah sengketa lahan akan dapat terselesaikan. (2) Masyarakat juga yakin bahwa meskipun penyelesaian kasus tanah belum mendapat solusi konkret, namun adanya tekad para petinggi untuk kembali mendudukan masalah tanah merupakan langkah maju dan didukung oleh semua pihak. (3) Kita tidak ingin persoalan tanah memicu konflik berkepanjangan sehingga mengganggu stabilitas keamanan yang pada akhirnya dapat mengganggu aktivitas pembangunan. (4) Begitu pula soal tanah dikaitkan dengan keterlibatan mafia tanah. (5) Kalau jelas terbukti dan mengarah ke tindak pidana, seharusnya diberi tindakan yang tegas sehingga tidak ada peluang bagi mafia tanah untuk ikut bermain yang dapat memicu konflik berkepanjangan.`;
+
+const P_TELE = `BERTELEKOMUNIKASI
+
+Cara Masa Depan
+(1) Coba bayangkan bagaimana enaknya kalau kita bisa “bertelekomunikasi” dengan tempat bekerja menggunakan jalan raya elektronik, dengan semua pekerjaan dilakukan di komputer atau melalui telepon! (2) Tidak perlu lagi berdesak-desakan di dalam bus atau kereta api atau membuang waktu berjam-jam di jalan dari dan/atau ke tempat kerja. (3) Kamu bisa bekerja di mana pun kamu mau—coba bayangkan semua kesempatan kerja yang dapat terbuka dengan cara ini! (4) Yang terpenting dalam hal ini, kita dapat bekerja tanpa harus menghilangkan kepentingan personal, bahkan di saat-saat produktif.
+— Molly
+
+Kehancuran Sedang dalam Proses
+(1) Memperpendek waktu berkendaraan dan mengurangi penggunaan bahan bakar jelas adalah suatu ide yang bagus. (2) Namun, ide itu seharusnya disertai dengan peningkatan transportasi umum atau dengan menjamin bahwa tempat bekerja terletak dekat dengan tempat tinggal pekerja. (3) Ide yang ambisius bahwa bertelekomunikasi seharusnya merupakan bagian dari cara hidup setiap orang hanya akan menjadikan kita makin lama makin asyik dengan diri sendiri. (4) Apakah kita benar-benar menginginkan perasaan kita sebagai bagian dari masyarakat menjadi hancur lebih jauh? (5) Sudah sewajarnya kita bekerja dengan situasi dan kondisi yang benar.
+— Richard
+
+“Bertelekomunikasi” adalah istilah yang diciptakan oleh Jack Nilles pada awal tahun 1970 untuk mendeskripsikan situasi di mana pekerja bekerja di depan komputer jauh dari kantor pusat (misalnya, di rumah) dan mengirimkan data dan dokumen ke kantor pusat melalui saluran telepon.`;
+
+const P_EKRAF = `(1) Gelombang revolusi industri 4.0 telah membawa perubahan fundamental pada berbagai tatanan kehidupan global. (2) Hal ini ditandai dengan semakin berkembangnya kreativitas, dan inovasi dengan pemanfaatan teknologi informasi yang mendisrupsi berbagai sendi kehidupan global, termasuk persaingan dalam bidang ekonomi. (3) Disrupsi tersebut dapat kita saksikan melalui cepatnya perubahan yang terjadi akibat pemanfaatan artificial intelligence (AI), internet of things, human-machine interface, dan merebaknya fenomena sharing economy yang menjadikan kreativitas dan inovasi sebagai garda terdepan dalam memenangkan persaingan ekonomi global.
+
+(1) Pada era revolusi industri 4.0 menjadikan ekonomi kreatif sebagai salah satu isu strategis yang layak mendapatkan pengarus utamaan sebagai pilihan strategi untuk memenangkan persaingan global. (2) Hal ini ditandai dengan terus dilakukannya inovasi dan kreativitas guna meningkatkan nilai tambah ekonomi melalui kapitalisasi ide kreatif. (3) Ekonomi kreatif sendiri mulai dikenal luas sejak munculnya buku The Creative Economy: How People Make Money from Ideas yang ditulis oleh John Howkins. (4) Istilah “ekonomi kreatif” dimunculkan Howkins ketika melihat adanya gelombang ekonomi baru yang melanda Amerika Serikat. (5) Gelombang ekonomi baru itu dicirikan dengan adanya aktivitas ekonomi berbasis ide, gagasan, dan kreativitas. (6) Asumsi Howkins tentang munculnya gelombang ekonomi baru di Amerika Serikat (AS) itu, bukan tanpa dasar. (7) Pada tahun 1997 di AS saja, perekonomian meraup tidak kurang dari USD414 miliar hanya dari produk barang dan jasa yang berbasis kreativitas.`;
+
+const BS = [`Benar`,`Salah`], TT = [`Tepat`,`Tidak Tepat`];
+
+const BAHASA_INDONESIA = [
+T(`Manakah informasi yang tepat terkait sumur berdasarkan infografik di atas? Tentukan BENAR atau SALAH untuk setiap pernyataan berdasarkan infografik tersebut!`,
+ [`Ukuran kedalaman ideal sumur resapan 150—200 cm.`,`Tinggi beton untuk penahan sisi sumur resapan 80—100 cm.`,`Jarak sumur resapan dengan tempat timbunan sampah 50 cm.`,`Tebal lapisan ijuk, batu, dan bata dalam sumur 150 cm.`],[0,1,1,1],
+ `Berdasarkan infografik: kedalaman sumur sekitar 1,5 m (pernyataan 1 Benar). Angka 80–100 cm adalah diameter sumur, bukan tinggi beton (Salah). Jarak minimal sumur dengan tempat sampah/septic tank adalah 5 meter, bukan 50 cm (Salah). Tebal lapisan ijuk, batu, dan bata 15 cm, bukan 150 cm (Salah). Catatan: jawaban soal infografik dibaca dari gambar, cek ulang dengan PDF asli.`,
+ BS,{passage:P_INFO}),
+
+S(`Berdasarkan infografik, apa yang akan terjadi jika kita tidak membuat saluran pembuangan air ketika membuat sumur resapan?`,
+ [`Air akan meresap ke tanah seluruhnya.`,`Sumur resapan akan kelebihan air dan menimbulkan banjir.`,`Air tidak dapat digunakan untuk memenuhi kebutuhan masyarakat.`,`Air akan menjadi kotor.`,`Sebagai antisipasi jika terjadi hujan yang lebat.`],1,
+ `Saluran pembuangan berfungsi mengalirkan kelebihan air dari sumur ke parit. Tanpa saluran itu, sumur akan meluap saat hujan lebat sehingga menimbulkan banjir.`,
+ {passage:P_INFO}),
+
+S(`Dalam memanen air hujan untuk memenuhi kebutuhan dan solusi krisis air tanah, sebaiknya kita …`,
+ [`menyiapkan uang 4-7 juta.`,`membuat sumur resapan.`,`menggali sumur resapan paling dalam 5 meter.`,`memberi jarak maksimal sumur dan septic tank sejauh 5 meter dari tepi.`,`menggali tanah yang mampu menyerap air.`],1,
+ `Infografik menyebut sumur resapan sebagai salah satu cara menampung air hujan ke dalam tanah untuk mengatasi krisis air tanah. Pilihan lain hanya detail biaya/ketentuan (dan ada yang keliru: kedalaman maksimal 2 m di bawah muka air tanah, jarak minimal—bukan maksimal—5 m).`,
+ {passage:P_INFO}),
+
+M(`Dari infografik, kita dapatkan informasi bahwa pemeriksaan menjelang musim hujan setidaknya dilakukan tiga tahun sekali. Tentukan daftar bagian apa yang mungkin perlu diperiksa dan diperhatikan dari bagian itu! Jawaban bisa lebih dari satu.`,
+ [`saluran air hujan`,`saringan sampah`,`diameter sumur`,`kedalaman sumur`,`ijuk, pecahan batu, dan bata`],[0,1,4],
+ `Bagian yang bisa tersumbat atau menurun fungsinya perlu diperiksa: saluran air hujan, saringan sampah, serta lapisan ijuk, pecahan batu, dan bata. Diameter dan kedalaman sumur adalah ukuran tetap dan tidak berubah. Catatan: dibaca dari gambar infografik, cek ulang dengan PDF asli.`,
+ {passage:P_INFO}),
+
+T(`Tentukan LOGIS atau TIDAK LOGIS berdasarkan infografik tersebut!`,
+ [`Fakta: pembuatan sumur resapan sangat rumit.\nAlasan: dibutuhkan banyak langkah untuk membuat sumur resapan.`,`Fakta: biaya untuk membuat sumur resapan sangat mahal.\nAlasan: dibutuhkan sekitar 4—7 juta rupiah untuk membuat sumur resapan.`,`Fakta: pemeriksaan sumur resapan dilakukan jelang musim hujan.\nAlasan: mengantisipasi kerja berulang dalam tiga tahun sekali.`],[1,0,1],
+ `(1) Tujuh langkah yang dijelaskan sederhana dan ada pilihan memasang sumur jadi, jadi "sangat rumit" tidak didukung → Tidak Logis. (2) Alasan menyebut angka biaya Rp4–7 juta yang mendukung klaim mahal → Logis. (3) Pemeriksaan jelang musim hujan dilakukan agar sumur siap menampung air, bukan "mengantisipasi kerja berulang"; alasan tidak menjelaskan fakta → Tidak Logis. Catatan: soal bersifat penalaran, jawaban ini adalah analisis terbaik.`,
+ [`Logis`,`Tidak Logis`],{passage:P_INFO}),
+
+S(`Sesuai dengan bacaan, gambaran karakter Bu Mus yang paling tepat adalah seorang guru yang …`,
+ [`bertindak mandiri karena menyusun silabus mata pelajaran dan mengajarkannya sendiri.`,`memiliki wawasan luas karena mendidik moral, demokrasi, hukum, keadilan, dan hak asasi.`,`berwawasan futuristik karena memberikan mata pelajaran yang pihak lain belum membicarakannya.`,`berbudi pekerti luhur karena memberikan mata pelajaran budi pekerti, moral, dan hukum.`,`memiliki kearifan lokal karena mengajari menggali nilai luhur dari diri sendiri.`],2,
+ `Teks menyebut Bu Mus "memiliki pandangan jauh ke depan" dan mengajarkan nilai moral, demokrasi, hukum, dst. "jauh hari sebelum orang-orang sekarang meributkan" soal itu. Itu menggambarkan wawasan futuristik.`,
+ {passage:P_LASKAR}),
+
+S(`Ungkapan “Kami tersihir dalam senyap” tergambar dari perilaku tokoh novel sebagai berikut.`,
+ [`Kami tidak pernah mengeluh dan memprotes keadaan sekolah kami.`,`Kami tetap sekolah sekalipun hujan lebat dan petir sambar-menyambar.`,`Kami tidak pernah membolos dan mengeluhkan kondisi sekolah kami.`,`Kami tetap sekolah sekalipun hanya bertopi kerucut dari daun lais.`,`Kami bertiga masuk sekolah walaupun memakai jas hujan milik ayah.`],0,
+ `Setelah "tersihir dalam senyap", kalimat berikutnya menyatakan bahwa sejak saat itu mereka tak pernah memprotes keadaan sekolah. Itulah perilaku yang menggambarkan ungkapan tersebut.`,
+ {passage:P_LASKAR}),
+
+S(`Tujuan Bu Mus menunjukkan dan menjelaskan gambar kondisi sel penjara Bung Karno yang sempit untuk menanggapi keluhan muridnya tentang kondisi sekolah adalah …`,
+ [`menggambarkan penderitaan Bung Karno melalui fasilitas yang sangat buruk dalam sel penjara.`,`menunjukkan penderitaan Bung Karno dalam proses memperjuangkan kemerdekaan.`,`menunjukkan Bung Karno merupakan salah satu orang tercerdas hasil pemenjaraan di sel yang buruk.`,`menggambarkan kesuraman sel penjara Bung Karno yang mengesankan kekerasan dan kesedihan.`,`membuktikan lokasi yang sangat buruk tetap bisa menguatkan tekad belajar Bung Karno.`],4,
+ `Bu Mus ingin menjawab keluhan murid: kondisi sekolah yang buruk bukan alasan untuk tidak belajar, karena Bung Karno tetap belajar dan membaca setiap hari meski berada di sel yang sangat buruk.`,
+ {passage:P_LASKAR}),
+
+S(`Hal yang berkaitan dengan kehidupan sehari-hari berdasarkan kutipan sinopsis novel tersebut adalah ….`,
+ [`Masih banyak sekolah yang tidak memadai, tetapi siswanya tetap bersekolah dengan semangat.`,`Siswa Bu Mus tetap belajar walaupun kondisi sekolahnya tidak bagus.`,`Siswa di daerah-daerah terpencil bersemangat untuk bersekolah, namun pemerintah tidak perhatian.`,`Semangat siswa untuk sekolah tidak berhubungan dengan kondisi sekolah.`,`Tokoh nasional banyak yang cerdas, tetapi dipenjara karena politik.`],0,
+ `Pilihan B hanya mengulang isi teks. Pilihan A mengaitkannya dengan kenyataan sehari-hari secara umum: banyak sekolah yang kurang memadai namun siswanya tetap semangat. Pilihan C menambah klaim yang tidak didukung teks.`,
+ {passage:P_LASKAR}),
+
+T(`Peristiwa apa yang akan terjadi kepada tokoh kami jika Bu Mus menanggapi keluhan? Tentukan TEPAT atau TIDAK TEPAT untuk setiap pernyataan berikut!`,
+ [`Tokoh kami akan terus mengeluhkan kondisi sekolah.`,`Tokoh kami tidak akan mengenal sosok Bung Karno.`,`Tokoh kami akan membolos saat hujan.`],[0,0,1],
+ `Bu Mus justru tidak menanggapi keluhan, tetapi menceritakan Bung Karno sehingga murid berhenti mengeluh. Jika Bu Mus hanya menanggapi keluhan, murid akan terus mengeluh (Tepat) dan tidak mendengar kisah Bung Karno (Tepat). Membolos saat hujan adalah dugaan yang tidak didukung teks (Tidak Tepat).`,
+ TT,{passage:P_LASKAR}),
+
+S(`Dari artikel yang diberikan oleh Pak Budiman, manakah gagasan pokok yang tepat dari bacaan tersebut?`,
+ [`Tujuan utama PAUD adalah untuk membentuk anak Indonesia yang berkualitas sehingga memiliki kesiapan yang optimal.`,`Dalam memilih PAUD, seperti dikutip NAEYC, orang tua disarankan untuk memperhatikan ciri PAUD yang baik, di antaranya adanya sarana dan prasarana sebagai penunjang pendidikan anak.`,`Ciri PAUD yang baik ada sekitar 5 poin yang dikutip dari National Association for the Education of Young Children (NAEYC).`,`PAUD merupakan upaya pembinaan kepada anak sejak lahir usia enam tahun yang dilakukan melalui pemberian rangsangan pendidikan agar anak memiliki kesiapan dalam memasuki pendidikan lebih lanjut.`,`Anak yang sebelumnya mendapatkan pendidikan di PAUD sering kali memiliki kemampuan untuk komunikasi lebih baik saat sekolah disebabkan ia sudah terbiasa dengan teman sebayanya.`],3,
+ `Seluruh bacaan membahas PAUD: pengertian, manfaat, dan ciri PAUD yang baik. Gagasan pokok yang mencakup keseluruhan adalah pengertian PAUD sebagai upaya pembinaan anak dengan rangsangan pendidikan (opsi D). Opsi lain hanya detail.`,
+ {passage:P_PAUD}),
+
+T(`Dalam artikel tersebut, Lydia Freyani percaya bahwa kegiatan di PAUD …. Tentukan TEPAT atau TIDAK TEPAT untuk setiap pernyataan berikut!`,
+ [`Dapat menstimulasi seluruh aktivitasnya melalui pendekatan bermain sambil belajar, hingga makan bersama.`,`Menanamkan kejujuran, kedisiplinan, dan hal positif lainnya sehingga memiliki kemampuan berkomunikasi lebih baik.`,`Dapat merangsang pendidikan yang sesuai dengan tahap tumbuh kembang anak usia prasekolah.`,`Dilakukan melalui aktivitas mengenal sekolah, kejujuran, kedisiplinan, dan berbagai kegiatan positif lainnya.`],[1,1,0,0],
+ `(1) Pernyataan mencampur dua gagasan: bermain sambil belajar adalah pendekatan, sedangkan makan bersama adalah penyebab komunikasi lebih baik → Tidak Tepat. (2) Kemampuan komunikasi disebabkan kebiasaan bermain, belajar, dan makan bersama teman sebaya, bukan penanaman kejujuran/kedisiplinan → Tidak Tepat. (3) Sesuai kalimat (1) paragraf kedua → Tepat. (4) Sesuai kalimat (3) paragraf kedua → Tepat.`,
+ TT,{passage:P_PAUD}),
+
+S(`Tujuan utama pendidikan anak usia dini (PAUD) di Indonesia menurut bacaan tersebut adalah ….`,
+ [`Membentuk anak Indonesia yang berkualitas.`,`Menyiapkan anak memiliki kesiapan dalam memasuki pendidikan lebih lanjut.`,`Menyiapkan anak memasuki pendidikan dasar.`,`Membentuk tumbuh kembang anak sesuai dengan perkembangannya.`,`Menyiapkan anak dalam mengarungi kehidupan setelah dewasa kelak.`],0,
+ `Kalimat (3) paragraf pertama: "Tujuan utamanya adalah untuk membentuk anak Indonesia yang berkualitas…". Pilihan lain adalah rincian dari anak yang berkualitas.`,
+ {passage:P_PAUD}),
+
+S(`Makna yang berbeda dari kata ideal yang terdapat pada kalimat (3) paragraf kesatu adalah ….`,
+ [`optimal`,`terbaik`,`kolektif`,`sesuai`,`cocok`],2,
+ `Dalam konteks kalimat, "ideal" bersinonim dengan optimal, terbaik, sesuai, dan cocok. "Kolektif" berarti secara bersama-sama sehingga maknanya berbeda.`,
+ {passage:P_PAUD}),
+
+T(`Menurut bacaan tersebut, dalam memilih PAUD, NAEYC menyarankan anak-anak untuk …. Tentukan BENAR atau SALAH untuk setiap pernyataan berikut!`,
+ [`menghabiskan hampir seluruh waktunya untuk bermain.`,`diberikan berbagai aktivitas sepanjang hari.`,`memajang hiasan di dalam kelas.`,`bermain dan membuat sesuatu dengan temannya.`],[0,0,1,0],
+ `Poin 1 NAEYC: anak menghabiskan hampir seluruh waktu untuk bermain, baik membuat sesuatu maupun bermain dengan temannya → (1) dan (4) Benar. Poin 2: berbagai aktivitas sepanjang hari → (2) Benar. Poin 3 adalah saran bagi orang tua untuk melihat hiasan kelas (idealnya karya anak), bukan anjuran agar anak memajang hiasan → (3) Salah.`,
+ BS,{passage:P_PAUD}),
+
+S(`Hubungan makna antarparagraf pada bacaan tersebut yang paling tepat adalah … [Nomor pada pilihan merujuk pada nomor kalimat dalam paragraf pertama.]`,
+ [`paragraf (2) menjadi penyebab paragraf (3).`,`paragraf (4) memaparkan contoh paragraf (3).`,`paragraf (3) merupakan pembanding paragraf (2).`,`paragraf (4) merupakan rincian paragraf (3).`,`paragraf (2) memiliki hubungan kausatif dengan paragraf (1).`],0,
+ `Kalimat (2) menyebut potensi konflik akibat persoalan tanah; kalimat (3) menyatakan karena tingginya kasus dan potensi konflik itu, usul pembentukan tim perlu direspons. Jadi (2) menjadi penyebab (3). Catatan: kalimat (4) tidak lengkap sehingga tidak dipakai sebagai dasar hubungan.`,
+ {passage:P_TANAH}),
+
+S(`Penulis pada bacaan tersebut berpihak kepada … .`,
+ [`penggarap lahan`,`aparat keamanan`,`para pengusaha`,`praktisi hukum`,`korban sengketa`],0,
+ `Penulis mengkritik cara hukum yang selalu mempertanyakan alasan rakyat menggarap tanah dan meminta dibuatkan instrumen hukum untuk kasus tanah garapan. Ini menunjukkan keberpihakan pada rakyat penggarap lahan.`,
+ {passage:P_TANAH}),
+
+S(`Konjungsi sebaliknya pada kalimat (3) paragraf kedua tidak tepat jika mengacu ke konteks antarkalimat dalam paragraf (3), konjungsi tersebut seharusnya diperbaiki menjadi …`,
+ [`Namun demikian`,`Dengan demikian`,`Bahkan`,`Oleh karena itu`,`Akan tetapi`],3,
+ `Kalimat (3) bukan kebalikan kalimat (2), melainkan kesimpulan/akibat dari masalah yang diuraikan sebelumnya: karena itu seharusnya dibuat instrumen hukum. Konjungsi yang tepat: "Oleh karena itu".`,
+ {passage:P_TANAH}),
+
+S(`Kalimat yang tepat untuk mengakhiri kalimat (4) paragraf pertama adalah …`,
+ [`membuat pola penyelesaian masalah, menginventarisasi, dan memetakan kasus-kasus pertanahan.`,`membentuk tim baru yang dapat menyelesaikan masalah dan memetakan kasus-kasus pertanahan.`,`bekerja sama dan bersinergi dengan pemerintah sebagai bagian dari perbaikan kasus yang ada.`,`menyelesaikan kasus tanah yang belum mendapat solusi konkret, namun ada tekad para petinggi untuk memperbaikinya.`,`mencari solusi terbaik dalam menyelesaikan dan memetakan kasus-kadus pertanahan.`],0,
+ `Kalimat (5) berbunyi "Bila sudah terdapat pola dan dapat dipetakan, langkah berikutnya mencari solusi". Maka tugas tim sebelumnya adalah membuat pola, menginventarisasi, dan memetakan kasus. Opsi B mengulang "tim", sedangkan E sudah menyebut solusi (langkah berikutnya) dan ada salah ketik.`,
+ {passage:P_TANAH}),
+
+T(`Manakah kalimat yang memiliki penggunaan kata serapan yang tepat? Tentukan TEPAT atau TIDAK TEPAT pada setiap pertanyaan berikut.`,
+ [`Kata direspons pada kalimat (3) paragraf pertama.`,`Kata instrumen pada kalimat (1) paragraf kedua.`,`Kata praktis pada kalimat (2) paragraf kedua.`,`Kata konkret pada kalimat (2) paragraf ketiga.`],[0,0,1,0],
+ `Bentuk baku: direspons (respons), instrumen (instrument), konkret (concrete) → Tepat. Pada kalimat "Praktis hukum selalu mempertanyakan…" seharusnya "praktik hukum" (practice), bukan "praktis" → Tidak Tepat.`,
+ TT,{passage:P_TANAH}),
+
+S(`Berdasarkan bacaan tersebut, apa hubungan antara “Cara Masa Depan” dan “Kehancuran Sedang dalam Proses”?`,
+ [`Keduanya menggunakan argumen yang berbeda untuk mencapai kesimpulan umum yang sama.`,`Keduanya ditulis dengan gaya yang sama, tetapi tentang topik yang sama sekali berbeda.`,`Keduanya mengutarakan pandangan umum yang sama, tetapi mencapai kesimpulan yang berbeda.`,`Keduanya mengutarakan pandangan yang berlawanan mengenai topik yang sama.`,`Keduanya menggambarkan pandangan yang berbeda satu sama lain.`],3,
+ `Keduanya membahas topik yang sama (bertelekomunikasi). Molly mendukung dan melihat manfaatnya, sedangkan Richard mengkritik dan melihat dampak negatifnya, sehingga pandangannya berlawanan.`,
+ {passage:P_TELE}),
+
+S(`Apakah maksud pertanyaan pada bagian akhir tulisan “Kehancuran Sedang dalam Proses”?`,
+ [`Mengajak pembaca setuju dengan penulis.`,`Membuat pembaca meragukan akan arti nilai dirinya sebagai bagian dari masyarakat.`,`Memberi kesan bahwa belum ada orang yang betul-betul memahami topik ini.`,`Mengajak pembaca membentuk opininya sendiri tentang topik ini.`,`Mengapresiasi ide yang ada dalam pandangan umum.`],0,
+ `Pertanyaan retoris Richard ("Apakah kita benar-benar menginginkan perasaan kita sebagai bagian dari masyarakat menjadi hancur lebih jauh?") bertujuan meyakinkan pembaca agar sependapat bahwa bertelekomunikasi berdampak buruk.`,
+ {passage:P_TELE}),
+
+S(`Manakah pernyataan yang disetujui oleh keduanya, baik Molly maupun Richard?`,
+ [`Orang-orang seharusnya dibiarkan bekerja selama yang mereka inginkan.`,`Menghabiskan waktu terlalu banyak ke tempat bekerja adalah tidak baik.`,`Bertelekomunikasi tidak akan berhasil untuk setiap orang.`,`Membentuk hubungan sosial adalah bagian terpenting dari pekerjaan.`,`Bekerja bisa menghilangkan komunikasi yang baik.`],1,
+ `Molly menyebut tidak perlu lagi membuang waktu berjam-jam di jalan, dan Richard menyatakan memperpendek waktu berkendaraan jelas ide yang bagus. Keduanya setuju bahwa terlalu banyak waktu ke tempat kerja itu tidak baik.`,
+ {passage:P_TELE}),
+
+T(`Richard menulis bahwa bertelekomunikasi hanya akan menjadikan kita makin lama makin asyik dengan diri sendiri. Apakah kamu setuju dengan pendapatnya ini? Tentukan YA atau TIDAK pada setiap alasan berikut! (YA = alasan mendukung pendapat Richard)`,
+ [`Pekerjaan adalah tempat orang dipaksa untuk berinteraksi dengan orang lain. Jika tidak ada interaksi, akan terjadi kemunduran.`,`Manusia pada dasarnya adalah makhluk sosial. Kalaupun tidak bertemu orang lain, mereka akan mencari teman dengan cara apa pun.`,`Orang-orang akan menjadi terbiasa bekerja sendiri, tidak di dalam tim.`],[0,1,0],
+ `Alasan (1) dan (3) mendukung pendapat Richard (tanpa interaksi kerja, orang jadi terkucil/asyik sendiri) → YA. Alasan (2) justru menyatakan manusia akan tetap mencari teman, sehingga tidak mendukung Richard → TIDAK. Soal bersifat opini, jawaban ini mengikuti logika argumen.`,
+ [`Ya`,`Tidak`],{passage:P_TELE}),
+
+T(`Manakah kalimat yang menggunakan kata penghubung yang tepat? Tentukan TEPAT atau TIDAK TEPAT pada setiap pertanyaan berikut.`,
+ [`Namun pada kalimat (3) pernyataan Richard.`,`di mana pun pada kalimat (3) pernyataan Molly.`,`di saat-saat pada kalimat (4) pernyataan Molly.`],[1,0,1],
+ `(1) Kata "Namun" ada pada kalimat (2) Richard, bukan kalimat (3) → Tidak Tepat. (2) "di mana pun" pada kalimat (3) Molly adalah penghubung yang benar dan penulisannya tepat (dipisah) → Tepat. (3) "di saat-saat" adalah frasa dengan kata depan, bukan kata penghubung (penghubungnya "bahkan") → Tidak Tepat.`,
+ TT,{passage:P_TELE}),
+
+S(`Simpulan yang PALING MUNGKIN bisa diambil dari tulisan di atas adalah ….`,
+ [`Ekonomi kreatif sendiri mulai ada sejak munculnya buku The Creative Economy: How People Make Money from Ideas yang ditulis oleh John Howkins.`,`Pada tahun 1997 di AS saja, perekonomian meraup kurang dari USD414 miliar hanya dari produk barang dan jasa yang berbasis kreativitas.`,`Kita dapat menyaksikan disrupsi melalui sangat cepatnya perubahan yang terjadi akibat pemanfaatan artificial intelligence (AI), internet of things, human-machine interface, dan merebaknya fenomena sharing economy.`,`Gelombang ekonomi baru di Amerika dicirikan dengan aktivitas ekonomi berbasis ide, gagasan, dan kreativitas.`,`Gelombang revolusi industri 4.0 akan membawa perubahan fundamental pada berbagai tatanan kehidupan global.`],4,
+ `Opsi A mengubah makna ("dikenal luas" menjadi "mulai ada"), B salah ("tidak kurang dari" menjadi "kurang dari"), sedangkan C dan D hanya detail. Simpulan yang paling mungkin adalah inferensi umum bahwa revolusi industri 4.0 membawa perubahan mendasar, termasuk munculnya ekonomi kreatif (opsi E).`,
+ {passage:P_EKRAF}),
+
+S(`Kalimat yang tepat sebagai perbaikan kalimat (1) paragraf kedua adalah ….`,
+ [`Pada era revolusi industri 4.0 menjadikan ekonomi kreatif sebagai salah satu isu strategis yang layak mendapatkan pengarusutamaan sebagai pilihan strategi untuk memenangi persaingan global.`,`Era revolusi industri 4.0 menjadikan ekonomi kreatif sebagai salah satu isu strategis yang layak mendapatkan pengarusutamaan sebagai pilihan strategi untuk memenangi persaingan global.`,`Pada era revolusi industri 4.0, menjadikan ekonomi kreatif sebagai salah satu isu strategis yang layak mendapatkan pengarus utamaan sebagai pilihan strategi untuk memenangkan persaingan global.`,`Era revolusi industri 4.0 menjadi ekonomi kreatif sebagai salah satu isu strategis yang layak mendapatkan pengarusutamaan sebagai pilihan strategi untuk memenangkan persaingan global.`,`Di era revolusi industri 4.0 dijadikan sebagai ekonomi kreatif sebagai salah satu isu strategis yang layak mendapatkan pengarus utamaan sebagai pilihan strategi untuk memenangi persaingan global.`],1,
+ `Kalimat asli tidak bersubjek karena diawali "Pada". Perbaikan: hilangkan "Pada" sehingga "Era revolusi industri 4.0" menjadi subjek. "Pengarusutamaan" ditulis serangkai dan "memenangi persaingan" tepat (memenangi + objek). Opsi A tetap tanpa subjek; C, D, E memiliki kesalahan lain.`,
+ {passage:P_EKRAF}),
+
+M(`Dilihat dari penggunaan tanda baca komanya, kalimat manakah yang memuat kalimat yang tepat? Pilihlah jawaban yang benar! Jawaban benar lebih dari satu.`,
+ [`Kalimat (2) paragraf pertama.`,`Kalimat (3) paragraf pertama.`,`Kalimat (5) paragraf kedua.`,`Kalimat (6) paragraf kedua.`,`Kalimat (7) paragraf kedua.`],[1,2,4],
+ `(A) Salah: koma sebelum "dan" pada "kreativitas, dan inovasi" (hanya dua unsur). (B) Benar: rincian tiga unsur lebih dengan koma sebelum "dan". (C) Benar: "ide, gagasan, dan kreativitas". (D) Salah: ada koma yang memisahkan subjek dan predikat ("itu, bukan tanpa dasar"). (E) Benar: koma setelah anak kalimat/keterangan di awal kalimat.`,
+ {passage:P_EKRAF}),
+
+S(`Penggunaan kata meraup dalam kalimat (7) paragraf kedua memperjelas keadaan yang terjadi, yaitu ….`,
+ [`mencakup lebih banyak keuntungan.`,`memperoleh banyak keuntungan.`,`menggandakan banyak sekali keuntungan.`,`mengumpulkan keuntungan-keuntungan.`,`mencapai beberapa keuntungan.`],1,
+ `"Meraup" berarti mengambil/memperoleh banyak sekaligus, sehingga memperjelas bahwa perekonomian AS memperoleh keuntungan yang sangat besar.`,
+ {passage:P_EKRAF}),
+
+T(`Bagaimana pola pengembangan paragraf ke-1 dan ke-2 pada bacaan tersebut? Tentukan BENAR atau SALAH untuk setiap pernyataan berdasarkan isi teks!`,
+ [`Paragraf pertama menggunakan pola sebab-akibat karena menjelaskan bagaimana gelombang revolusi industri 4.0 berubah.`,`Paragraf kedua menggunakan pola perbandingan dalam menjelaskan bagaimana revolusi industri 4.0 menjadikan ekonomi kreatif sebagai pilihan persaingan global.`],[1,1],
+ `(1) Paragraf pertama menguraikan ciri dan contoh (AI, IoT, sharing economy) dampak revolusi industri 4.0, bukan menjelaskan bagaimana gelombang itu berubah → Salah. (2) Paragraf kedua memakai pola penjelasan/ilustrasi (asal-usul istilah ekonomi kreatif dan data USD414 miliar), tidak membandingkan dua hal → Salah. Catatan: soal pola paragraf bersifat interpretasi.`,
+ BS,{passage:P_EKRAF})
+];
+
+const P_AI = `AI is increasingly used in various areas of life, including the workplace. While some support this development, others express concern. Below are arguments for and against the use of AI at work.
+
+Supporters present three main points. First, efficiency and productivity. AI can handle repetitive, monotonous tasks without fatigue, allowing employees to focus on more complex and creative work. This increases output and saves time. Second, better decision-making. AI can analyze vast amounts of data quickly, identifying patterns and trends that help managers make informed, data-driven decisions. This leads to more accurate forecasts, improved employee engagement, and better overall results. Third, learning and development. AI can enhance employee engagement by offering personalized training. AI systems can detect skill gaps and recommend tailored programs, helping employees grow. This benefits both workers—by boosting confidence and capability—and companies—by fostering more skilled, loyal, and satisfied staff.
+
+Critics, however, raise several concerns. First, job displacement. As AI takes over tasks once handled by humans, there’s growing fear of job loss, causing stress among workers. Second, lack of human touch. Despite its capabilities, AI cannot replicate the empathy, emotional intelligence, and connection offered by human leaders—essential in many roles. Third, ethical and privacy issues. Concerns about data use require clear policies to ensure fairness, transparency, and respect for privacy, maintaining employee trust.
+
+Conclusion: AI should be used in the workplace, but with proper regulations to maximize benefits and minimize risks. A cautious, well-planned approach is essential for the future.`;
+
+const P_BALI = `Exploring Bali's Natural Wonders
+
+Bali, a beautiful island in Indonesia, is known for its stunning landscapes and rich culture. While many come for the beaches and temples, the island also offers natural attractions that amaze nature lovers from around the world. From national parks and waterfalls to terraced rice fields, Bali is full of natural beauty.
+
+In the west lies West Bali National Park, a peaceful area filled with green forests, calm mangrove swamps, and colorful coral reefs along the sea. The air is fresh, and the scenery feels untouched. One of the park’s most special sights is the Bali Starling—a rare white bird with bright blue around its eyes. Its soft song adds magic to the quiet forest. Visitors can walk along clear paths and enjoy the rich variety of plants and animals in this protected area.
+
+Heading north, travelers find the scenic Munduk Waterfall, surrounded by green hills and forests. Water flows gently over rocky cliffs into a cool clear pool. Mist rises into the air, mixing with the calming sound of falling water. The walk to the waterfall passes through narrow paths lined with coffee and clove trees. Their fresh scent fills the air, offering a pleasant and peaceful experience. Munduk is the perfect place to relax and enjoy Bali’s natural charm.
+
+Near the cultural center Ubud, the famous Tegalalang rice terraces stretch across the hills in green steps. These terraces are shaped by generations of farmers who work the land by hand. In the morning, mist rises above the fields, and sunlight reflects off the water in the paddies. Farmers in wide-brimmed hats plant rice carefully, their feet sinking into the soft earth. Water flows gently through small canals, keeping the fields healthy and green. The quiet surroundings and slow rhythm of farm life create a peaceful and inspiring scene.
+
+These natural wonders highlight Bali's dedication in preserving its environmental and cultural treasures. By exploring these sites, tourists not only experience the island's scenic beauty but also support ongoing conservation efforts, helping to ensure that Bali's wonders last for future generations.`;
+
+const P_SOSMED = `Social Media Effects on Teen Mental Health
+
+In today’s world, social media is a big part of many teenagers’ daily lives. While it has some benefits, such as staying connected with friends, meeting new people, and learning about interesting topics, it also brings serious problems. I strongly believe that social media harms teen mental health, and we must pay more attention to this issue before it becomes even worse.
+
+First, social media often makes teenagers compare themselves to others in an unhealthy way. When teens see pictures of people who seem perfect, they feel that they are not good enough. These feelings can lower self-esteem and lead to sadness, anxiety, or even depression. The problem is that many of these online posts are edited, filtered, or fake, but teens still feel pressure to look or live the same way. They may think that their own life is boring or not successful, which is simply not true.
+
+Second, too much time on social media affects sleep and study habits. Many teenagers use their phones late at night, checking messages or watching videos, which reduces sleep time and quality. Without enough sleep, teens cannot focus well in class, and their grades may suffer. This can increase stress and worry about the future, making them feel overwhelmed.
+
+Finally, online bullying, or cyberbullying, is another serious danger. Unlike face-to-face bullying, it can happen at any time and be shared with many people. Victims of cyberbullying often feel alone, scared, and helpless, and in some cases, it leads to serious mental health problems.
+
+In conclusion, although social media has some good uses, its harm to teen mental health is much greater. Teenagers need support from parents, teachers, and society to use it wisely. Schools should teach students how to use social media in healthy ways, and parents should guide their children to take breaks and spend time offline. By doing this, we can help protect young people’s mental health in this digital age.`;
+
+const P_INTERN = `My Experience as an Intern at a Sports Club
+
+Last summer, I had the opportunity to work as an intern at a local sports club. It was my first time working in a professional sports environment, and I was both nervous and excited. The internship went through a few phases, starting from orientation until finally jumping in to help during practices and games.
+
+On my first day, I met the head coach, who welcomed me and explained my tasks. I had to set up cones for drills, bring water for the players, and check the training schedules. The first few days were challenging because I was not used to the morning routine. Every morning I had to wake up early, arrive on time, and follow instructions carefully. I worried about making mistakes, but the coaches were kind and guided me.
+
+In the second month of my internship, I was trained to handle emergency situations. I got the chance to put that knowledge into practice when something unexpected happened. During football practice, a player fell and hurt his ankle. Everyone stopped, and I quickly ran to get the first aid kit. I helped the coach assess the injury and ensured the player stayed calm while we got him seated safely. Luckily, it wasn’t serious, but the experience reinforced an important lesson: staying alert and prepared during emergencies can make a big difference.
+
+At the end of my internship, the coaches held an evaluation and reflection session where they shared the results of their feedback. They highlighted my strengths in teamwork, responsibility, and communication, and even gave me a club T-shirt as a gift. I felt proud because I had improved in these areas. It was a great experience, and I hope to work in a sports club again in the future.`;
+
+const P_PLANT = `In total, the plant has need of at least 16 elements, of which the most important are carbon, hydrogen, oxygen, nitrogen, phosphorus, sulfur, potassium, calcium, and magnesium.
+
+The plant obtains carbon and hydrogen dioxide from the atmosphere; other nutrients are taken up from the soil. Although the plant contains sodium, iodine, and cobalt, these are apparently not essential. This is also true of silicon and aluminum.
+
+Overall chemical analyses indicate that the total supply of nutrients in soils is usually high in comparison with the requirements of crop plants. Much of this potential supply, however, is bound tightly in forms that are not released to crops fast enough to give satisfactory growth. Because of this, the farmer is interested in measuring the available nutrient supply as contrasted to the total quantities.`;
+
+const P_POLAR = `Polar bear are adapted to life in the polar region, around the North Pole. Their bodies have special features that work particularly well in the polar seas. For instance, they have sharp and powerful claws for catching their food, which is mainly seals. In their own environment, they are excellent hunter; but if they had to live on the birds and squirrels in other places, they would die.
+
+The science that studies the way that different forms of life are adapted to their particular environment is called ecology.
+
+The first lesson of ecology is that all life in an environment depends on other forms of life. Polar bears depend on seals, which can live only where they do because they depend on particular kinds of fish which are found in the Arctic seas.
+
+There are certain important cycles in nature that show plants and animals depend on each other: for example, the nitrogen cycles. Plants take nitrogen compounds from the soil and turn them into protein. Animals eat these proteins and return some of them to the soil as waste products and the rest when they die. Another cycle is the oxygen cycle. When we breathe, we take in oxygen, and give out carbon dioxide. Plants absorb it to make sugar compounds, and in the process oxygen is produced and released to the atmosphere.
+
+An ideal ecological system, living things exist in balance. However, particularly where man interferes, a species may become too successful and abundant, and the balance is destroyed. For instance, the use of pesticides to kill a particular plan pest may also kill predatory insects and even birds, and thus other pests are allowed to increase. Therefore, great care is needed in the use of pesticides.
+
+Through ecology we try to restore the balance in the ecological system, and thus save the world from devastation.`;
+
+const P_SUFFRAGE = `During the nineteenth century, women in the United States organized and participated in a large number of reform movement, including movements to reorganize the prison system, improve education, ban the sale of alcohol, and most, importantly, to free the slaves. Some women saw similarities in the social status of women and slaves. Women like Elizabeth Cady Stanton and Lucy Stone were feminists and abolitionists who supported the rights of both women and blacks. A number of male abolitionists, including William Lloyd Garrison and Wendell Philips, also supported the rights of women to speak and participate equally with men in antislavery activities. Probably more than any other movement, abolitionism offered women previously denied entry into politics. They became involved primarily in order to better their living conditions and the conditions of others.
+
+When the Civil War ended in 1865, the Fourteenth and Fifteenth Amendments to the Constitution adopted, in 1868 and 1870 granted citizenship and suffrage to blacks but not to women. Discouraged but resolved, feminists influenced more and more women to demand the right to vote. In 1869 Wyoming Territory had yielded to demands by feminists, but eastern states resisted more stubbornly than before. A women's suffrage bill had been presented to every Congress since 1878 but it continually failed to pass until 1920, when the Nineteenth Amendment granted women the right to vote.`;
+
+const P_LETTER = `Dear Ms. Susanti,
+
+I hope this letter finds you in good health. I am writing to you today to express my concerns about the upcoming math exam.
+
+As you know, math has always been a challenging subject for me, and I have been struggling with it for some time now. I have been working hard to prepare for the exam, but I am still feeling unsure about my abilities.
+
+I am wondering if you could give me some extra help or guidance to prepare for the exam. Perhaps you could recommend some study materials or provide some additional practice problems for me to work on.
+
+I appreciate all the hard-work and effort you put into teaching us and I know you want us to succeed. Your guidance and support would mean a lot to me and I am grateful for any help you can provide.
+
+Thank you for your time and attention. I look forward to hearing from you soon.
+
+Sincerely,
+Rayani.`;
+
+const P_JUMBLED = `The following sentences are jumbled.
+1. One is familiar "Tombstone" mat lists where you went to school and where you've worked in chronological order.
+2. But prospective employees throw away most of those unrequested "Tombstone" lists, preferring to interview the quick rather than the dead.
+3. The main purpose of a resume is to convince an employer to grant you an interview.
+4. It's handy to have a "Tombstone" for certain occasions.
+5. There are two kinds.
+6. The other is what I call the "functional" resume descriptive, fun to read, unique to you and much more likely to land you an interview.`;
+
+const P_CLOZE = `Poverty sometimes occurs in …(24) slums, where some poor people have not had the opportunity to learn skills that will help them to … (25) a living. People trapped in this kind of situation often have ... (26) income.`;
+
+const TF = [`TRUE`,`FALSE`];
+
+const BAHASA_INGGRIS = [
+T(`Based on the information given, which industry sectors are heavily impacted by AI? Click the TRUE or FALSE option for each statement!`,
+ [`Information and communication`,`Financial and insurance activities`,`Agriculture, Forestry and Fisheries`],[0,0,1],
+ `The text does not list specific industries, so this item relies on the common picture of AI exposure: information & communication and finance/insurance are heavily data-driven and highly impacted, while agriculture, forestry and fisheries are comparatively less impacted. Catatan: jawaban ini berdasarkan pengetahuan umum, cek ulang bila PDF asli memuat data/gambar tambahan.`,
+ TF,{passage:P_AI}),
+
+T(`What is the main purpose of visiting these places: to support conservation or to relax? Click the Conservation or Relaxation for each place`,
+ [`Munduk Waterfall`,`West Bali National Park`,`Tegalalang Rice Terraces`],[1,0,1],
+ `Munduk: "the perfect place to relax and enjoy Bali's natural charm" → Relaxation. West Bali National Park is described as a protected area with rare species (Bali Starling) → Conservation. Tegalalang: quiet surroundings and a slow rhythm of farm life that create a peaceful scene → Relaxation. Catatan: item ini bersifat interpretasi.`,
+ [`Conservation`,`Relaxation`],{passage:P_BALI}),
+
+T(`Based on the information given, using social media extensively brings about unintended effects on users who are mostly youths. Click the TRUE or FALSE option for each statement!`,
+ [`They tend to compare themselves to others in an unhealthy way`,`Victims of online bullying always find help in many ways`,`Social media use affects the quality of their sleep`],[0,1,0],
+ `(A) True: teens compare themselves to people who seem perfect. (B) False: victims of cyberbullying often feel alone, scared, and helpless. (C) True: using phones late at night reduces sleep time and quality.`,
+ TF,{passage:P_SOSMED}),
+
+M(`Which parts of the text best support the description of Bali as "Bali is full of natural beauty"? There is more than one correct answer. Click on every correct answer!`,
+ [`A peaceful area filled with green forests, calm mangrove swamps, and colorful coral reefs along the sea.`,`These terraces are shaped by generations of farmers who work the land by hand.`,`Water flows gently over rocky cliffs into a cool, clear pool. Mist rises into the air, mixing with the calming sound of falling water.`,`In the morning, mist rises above the fields, and sunlight reflects off the water in the paddies.`,`Farmers in wide-brimmed hats plant rice carefully, their feet sinking into the soft earth.`],[0,2,3],
+ `Natural beauty is shown through descriptions of nature itself: forests, mangroves and reefs (A); waterfall, cliffs, pool and mist (C); morning mist and sunlight on the paddies (D). Options B and E describe farmers' activities, not natural scenery.`,
+ {passage:P_BALI}),
+
+M(`What will happen if teenagers have poor sleep quality? There is more than one correct answer. Click on every correct answer!`,
+ [`Teenagers' grades could drop.`,`Teens struggle to focus in class.`,`Teens are likely to feel stressed.`,`Teenagers will be more confident`,`Teens will become mentally strong.`],[0,1,2],
+ `Paragraph 3: without enough sleep, teens cannot focus well in class, their grades may suffer, and stress and worry can increase. Being more confident or mentally strong is not stated.`,
+ {passage:P_SOSMED}),
+
+M(`What are the best words to describe the writer’s personality during the internship? There is more than one correct answer. Click on every correct answer!`,
+ [`Careful and ready to help`,`Confident and enjoys working alone`,`Responsible and willing to learn`,`Friendly and works well with others`,`Creative and likes to try new things`],[0,2,3],
+ `The writer followed instructions carefully and quickly got the first aid kit (careful, ready to help), was trained for emergencies (willing to learn), and was praised for responsibility, teamwork, and communication (friendly, works well with others). The writer was nervous, not confident, and nothing shows creativity.`,
+ {passage:P_INTERN}),
+
+S(`During the internship, what did the writer do every morning?`,
+ [`Made schedules and explained them to the coaches.`,`Played football with the team and got the first aid kit.`,`Prepared a club gift, guided the coaches, and gave t-shirts.`,`Woke up early, arrived on time, and followed the instructions.`,`Set up cones, brought water, and checked emergency schedules.`],3,
+ `Paragraph 2: "Every morning I had to wake up early, arrive on time, and follow instructions carefully."`,
+ {passage:P_INTERN}),
+
+S(`Which of the following elements is not taken up from the soil?`,
+ [`Potassium`,`Magnesium`,`Carbon`,`Calcium`,`Sulfur`],2,
+ `Paragraph 2: the plant obtains carbon (and hydrogen) from the atmosphere; other nutrients are taken up from the soil. So carbon is not taken up from the soil.`,
+ {passage:P_PLANT}),
+
+S(`Why do farmers prefer considering the only available nutrients to the total quantities of nutrient found in the soil? Because ...`,
+ [`they do to know how to obtain all the nutrients`,`chemical analyses indicate that the soil constrains all the nutrients needed`,`the nutrient are in the soil`,`most of the nutrients are bound in compounds`,`some of the nutrients are found in the atmosphere`],3,
+ `Paragraph 3: much of the potential supply is bound tightly in forms that are not released to crops fast enough, so farmers measure the available nutrients instead of the total.`,
+ {passage:P_PLANT}),
+
+S(`The topic of paragraph three is about ...`,
+ [`the result of chemical analyses`,`the requirements of crop plants`,`giving satisfactory growth to the plants`,`measuring the available nutrients supply`,`the abundance of nutrients in the soil.`],3,
+ `Paragraph 3 ends with the point that, because most nutrients are bound, the farmer is interested in measuring the available nutrient supply as contrasted to the total quantities. This is the topic of the paragraph.`,
+ {passage:P_PLANT}),
+
+S(`How many elements which are not very important can be found in the plants?`,
+ [`Three`,`Five`,`Seven`,`Nine`,`Sixteen`],1,
+ `Paragraph 2 names the elements that are not essential: sodium, iodine, cobalt, silicon, and aluminum = five.`,
+ {passage:P_PLANT}),
+
+S(`"The plant obtains carbon and hydrogen dioxide ..." (paragraph 2). Obtains means ...`,
+ [`gets`,`takes`,`puts`,`gives`,`has`],0,
+ `"Obtains" means to get or acquire something. "Puts" and "gives" mean the opposite direction.`,
+ {passage:P_PLANT}),
+
+S(`The habitat of polar bear is in ...`,
+ [`the tropical countries`,`the North pole`,`the South pole`,`the Arctic seas`,`Europe`],1,
+ `Paragraph 1, first sentence: "Polar bear are adapted to life in the polar region, around the North Pole."`,
+ {passage:P_POLAR}),
+
+S(`What does the text mainly discuss?`,
+ [`ecology`,`polar bears`,`cycles in nature`,`the misuse of pesticides`,`an ideal ecological system`],0,
+ `The text defines ecology and explains its lessons (dependence among living things, natural cycles, balance, and its purpose). Polar bears, cycles, and pesticides are only examples.`,
+ {passage:P_POLAR}),
+
+S(`The ecology in certain area will be in danger if ...`,
+ [`seals eat a lot of fish`,`the farmers use pesticides`,`polar bears don't eat seals anymore`,`man interferes his environment too much`,`plants take nitrogen compound from the soil`],3,
+ `Paragraph 5: particularly where man interferes, a species may become too abundant and the balance is destroyed.`,
+ {passage:P_POLAR}),
+
+S(`The main idea of paragraph 3 is that ...`,
+ [`Polar bears depend on seals`,`Ecological system needs well treatment`,`Plants and animals depend one each other`,`Plants produce and release oxygen to the atmosphere`,`There's an interdependence of living things in a particular area.`],4,
+ `Paragraph 3 states the first lesson of ecology: all life in an environment depends on other forms of life (polar bears depend on seals, seals on fish). Option A is only an example.`,
+ {passage:P_POLAR}),
+
+S(`"... the world from devastation." (paragraph 6) The synonym of the underlined word is ...`,
+ [`rehabilitation`,`extinction`,`destruction`,`preservation`,`starvation`],2,
+ `Devastation means great damage or ruin, so the closest synonym is destruction.`,
+ {passage:P_POLAR}),
+
+S(`When were women allowed to vote throughout the United States?`,
+ [`In 1865`,`After 1868`,`After 1870`,`After 1878`,`After 1920`],4,
+ `Paragraph 2: the suffrage bill failed to pass until 1920, when the Nineteenth Amendment granted women the right to vote nationwide.`,
+ {passage:P_SUFFRAGE}),
+
+S(`What is mainly discussed in the second paragraph?`,
+ [`The process of giving right to vote to women.`,`The effects of the civil war.`,`The right to vote to black people.`,`The nineteenth amendment.`,`The Wyoming Territory.`],0,
+ `Paragraph 2 traces how women gained suffrage: excluded after the Civil War amendments, feminists' demands, Wyoming's early concession, and finally the Nineteenth Amendment in 1920.`,
+ {passage:P_SUFFRAGE}),
+
+S(`What is the topic of the passage primarily concerned with?`,
+ [`Abolitionists`,`The civil war`,`Women's suffrage`,`The Wyoming Territory`,`The Fourteenth and Fifteenth Amendment`],2,
+ `Both paragraphs focus on women's reform movements and their struggle to win the right to vote (suffrage).`,
+ {passage:P_SUFFRAGE}),
+
+S(`According to the passage, why did women become active in politics?`,
+ [`To be elected to public office`,`To be famous throughout the world`,`To amend the Declaration of Independence`,`To support Elizabeth Cady Stanton for president`,`To improve the condition of life that existed at the time bill had been presented to`],4,
+ `Paragraph 1: "They became involved primarily in order to better their living conditions and the conditions of others."`,
+ {passage:P_SUFFRAGE}),
+
+S(`"A women's suffrage bill had been presented to … " (paragraph 2). The closest meaning to the underlined word (suffrage) is ...`,
+ [`freedom from slavery`,`the right to vote`,`citizenship`,`expectation`,`pain`],1,
+ `Suffrage means the right to vote.`,
+ {passage:P_SUFFRAGE}),
+
+S(`The correct arrangement of the sentences above is:`,
+ [`1, 2, 3, 4, 5, 6`,`1, 3, 5, 2, 4, 6`,`2, 4, 6, 1, 3, 5`,`6, 1, 4, 3, 2, 5`,`3, 5, 1, 6, 4, 2`],4,
+ `Start with the general statement (3) about a resume's purpose, then "There are two kinds" (5), introduce the first kind (1) and the other kind (6), then comment on the first kind: handy on certain occasions (4), but employers discard unrequested lists (2). Order: 3, 5, 1, 6, 4, 2.`,
+ {passage:P_JUMBLED}),
+
+S(`Fill in the blank (24): Poverty sometimes occurs in …(24) slums`,
+ [`rich`,`small`,`urban`,`remote`,`suburban`],2,
+ `Slums are densely populated, poor areas in cities, so "urban slums" is the natural collocation.`,
+ {passage:P_CLOZE}),
+
+S(`Fill in the blank (25): … skills that will help them to … (25) a living.`,
+ [`get`,`owe`,`find`,`need`,`earn`],4,
+ `The fixed expression is "earn a living".`,
+ {passage:P_CLOZE}),
+
+S(`Fill in the blank (26): People trapped in this kind of situation often have ... (26) income.`,
+ [`much`,`enough`,`sufficient`,`inefficient`,`inadequate`],4,
+ `Poor people trapped in poverty typically have inadequate (not enough) income. "Much", "enough", and "sufficient" contradict the context; "inefficient" does not collocate with income.`,
+ {passage:P_CLOZE}),
+
+S(`What teacher is Ms. Susanti?`,
+ [`Biology`,`Geography`,`Mathematics`,`History`,`Pancasila`],2,
+ `The letter to Ms. Susanti is about the upcoming math exam and asks for help in math, so she is the Mathematics teacher.`,
+ {passage:P_LETTER}),
+
+S(`What does Rayani think of mathematics?`,
+ [`It’s easy`,`It’s not easy`,`It’s helpful`,`It’s enjoyable`,`It’s not difficult`],1,
+ `Rayani says math has always been a challenging subject and she has been struggling with it, so she thinks it is not easy.`,
+ {passage:P_LETTER}),
+
+S(`Rayani writes Ms. Susanti a letter because she wants her teacher ….`,
+ [`to tell her`,`to give her some extra help and guidance`,`buy her math books`,`to be friendlier to her`,`to be kind to all students`],1,
+ `Paragraph 3: "I am wondering if you could give me some extra help or guidance to prepare for the exam."`,
+ {passage:P_LETTER}),
+
+S(`What is the moral lesson that we learn from Rayani?`,
+ [`Even if mathematics is challenging for students, they`,`Ms. Susanti is Rayani’s math teacher`,`Rayani enjoys going places`,`Rayani tells her teacher about her childhood`,`Rayani prefers music to dance`],0,
+ `Only option A is a lesson/moral (even if math is challenging, students can keep trying and ask teachers for help). The other options are unrelated facts. Catatan: opsi A terpotong di soal aslinya.`,
+ {passage:P_LETTER})
+];
+
+
+const db = { "Matematika": MATEMATIKA, "Bahasa Indonesia": BAHASA_INDONESIA, "Bahasa Inggris": BAHASA_INGGRIS };
+const SUBJ = {
+ 'Matematika': {
+  prefix:'MTK', color:'#3b82f6', bg:'#e3eeff', sfx:'pembahasan SMA',
+  icon:'<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>',
+  topics:['Bilangan & Eksponen','Bilangan & Eksponen','Aljabar & Program Linear','Aljabar & Program Linear','Aljabar & Program Linear','Aljabar & Program Linear','Fungsi','Fungsi','Fungsi','Fungsi','Matematika Keuangan & Barisan','Matematika Keuangan & Barisan','Fungsi','Geometri Bidang','Geometri Bidang','Dimensi Tiga','Dimensi Tiga','Geometri Bidang','Dimensi Tiga','Dimensi Tiga','Transformasi Geometri','Trigonometri','Trigonometri','Statistika','Statistika','Statistika','Kombinatorika & Peluang','Kombinatorika & Peluang','Kombinatorika & Peluang','Kombinatorika & Peluang'],
+  diffs:[3,2,2,2,2,2,2,1,2,3,1,2,2,2,2,2,3,3,2,3,2,1,1,3,2,2,2,2,1,1],
+  vq:['sifat eksponen bilangan berpangkat pecahan','menyederhanakan bentuk eksponen pangkat pecahan','sistem persamaan linear tiga variabel soal cerita','fungsi linear soal cerita','program linear nilai maksimum metode titik pojok','program linear soal cerita model matematika','komposisi fungsi domain dan range fungsi akar','komposisi fungsi soal cerita','invers fungsi komposisi','fungsi kuadrat titik puncak tanda a b c','bunga tunggal aritmetika sosial','barisan geometri pertumbuhan bakteri','fungsi kuadrat titik puncak dan kuadran grafik','sudut bertolak belakang segitiga sama sisi','kesebangunan segitiga pada koordinat','jarak titik ke titik dimensi tiga balok','volume limas persegi rusuk tegak','keliling dan luas trapesium siku-siku','jarak titik ke garis pada kubus dimensi tiga','jarak titik ke bidang dan garis bersilangan pada kubus','transformasi geometri refleksi dan rotasi','trigonometri sudut tumpul identitas sec','trigonometri sudut elevasi soal cerita','simpangan rata-rata data tunggal','rata-rata gabungan dan jangkauan data','modus data kelompok tabel distribusi frekuensi','permutasi dengan syarat posisi jabatan','kombinasi memilih pengurus','peluang kejadian permutasi berdampingan','peluang kejadian tanpa pengembalian']
+ },
+ 'Bahasa Indonesia': {
+  prefix:'IND', color:'#ef4444', bg:'#ffe4e4', sfx:'TKA bahasa indonesia pembahasan',
+  icon:'<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>',
+  topics:[...Array(5).fill('Infografik: Panen Air Hujan'),...Array(5).fill('Novel: Laskar Pelangi'),...Array(5).fill('Teks Informasi: PAUD'),...Array(5).fill('Teks Opini: Sengketa Tanah'),...Array(5).fill('Teks Pembanding: Bertelekomunikasi'),...Array(5).fill('Teks Ekonomi Kreatif')],
+  diffs:[1,1,1,2,3, 1,1,2,2,2, 2,3,1,1,2, 3,2,2,2,2, 2,2,1,3,3, 2,2,3,1,2],
+  vq:['membaca infografik informasi tersurat','membaca infografik menyimpulkan informasi','membaca infografik menyimpulkan solusi','membaca infografik menentukan informasi penting','penalaran fakta dan alasan logis','menentukan karakter tokoh novel','makna ungkapan dalam novel','tujuan tokoh dalam cerita novel','mengaitkan isi novel dengan kehidupan sehari-hari','menentukan peristiwa jika alur berubah novel','menentukan gagasan pokok paragraf','menentukan pendapat tokoh dalam teks informasi','menentukan tujuan utama dalam teks','makna kata dalam konteks kalimat','menentukan informasi tersurat dalam teks','hubungan antarkalimat dan antarparagraf','menentukan keberpihakan penulis teks opini','konjungsi antarkalimat','melengkapi kalimat rumpang kalimat efektif','kata serapan baku KBBI','membandingkan dua teks pandangan penulis','kalimat retoris maksud penulis','menemukan kesamaan pendapat dua teks','menanggapi opini dalam teks argumentasi','kata penghubung konjungsi','menyimpulkan isi teks','perbaikan kalimat tidak efektif tidak bersubjek','tanda baca koma PUEBI','makna kata dalam konteks kalimat','pola pengembangan paragraf']
+ },
+ 'Bahasa Inggris': {
+  prefix:'ENG', color:'#d99a00', bg:'#fff3cc', sfx:'TKA bahasa inggris explained',
+  icon:'<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>',
+  topics:['Discussion & Exposition Text','Descriptive Text: Bali','Discussion & Exposition Text','Descriptive Text: Bali','Discussion & Exposition Text','Recount Text','Recount Text',...Array(5).fill('Explanation Text: Plants'),...Array(5).fill('Report Text: Ecology'),...Array(5).fill("Historical Text: Women's Suffrage"),...Array(4).fill('Sentence Arrangement & Cloze'),...Array(4).fill('Letter')],
+  diffs:[2,2,1,2,1,2,1,1,2,2,2,1,1,1,2,2,1,2,2,1,2,1,3,1,1,2,1,1,1,2],
+  vq:['reading comprehension discussion text','reading comprehension descriptive text','reading comprehension exposition text','supporting details reading comprehension','cause and effect reading comprehension','recount text character traits','detail information recount text','detail information reading comprehension','reading comprehension reason question','main idea of paragraph','detail information reading comprehension','synonym vocabulary in context','detail information report text','main idea of the text','inference reading comprehension','main idea of paragraph','synonym vocabulary in context','detail information historical text','main idea of paragraph','topic of the passage','reading comprehension reason question','vocabulary in context meaning','jumbled sentences arrangement','cloze test collocation','cloze test collocation','cloze test vocabulary','reading comprehension letter','reading comprehension letter','purpose of the letter','moral lesson reading comprehension']
+ }
+};
+const DIFF = {1:{label:'Mudah',pts:10,cls:'d1'},2:{label:'Sedang',pts:20,cls:'d2'},3:{label:'Sulit',pts:30,cls:'d3'}};
+const qById = {};
+Object.keys(db).forEach(s => db[s].forEach((q, i) => {
+  const m = SUBJ[s];
+  Object.assign(q, { id: m.prefix + (i + 1), no: i + 1, subject: s, topic: m.topics[i], diff: m.diffs[i], vq: m.vq[i] });
+  qById[q.id] = q;
+}));
+const topicsOf = s => [...new Set(db[s].map(q => q.topic))];
+
+/* ================= UTIL ================= */
+const $ = id => document.getElementById(id);
+const fmtTime = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const ACT = [];
+const act = fn => `ACT[${ACT.push(fn) - 1}]()`;
+const ICON = (s, size) => `<svg ${size ? `style="width:${size}px;height:${size}px"` : ''} fill="none" stroke="${SUBJ[s].color}" viewBox="0 0 24 24">${SUBJ[s].icon}</svg>`;
+const CHECK = '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="4"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+const diffChip = d => `<span class="chip ${DIFF[d].cls}">${DIFF[d].label}</span>`;
+
+/* ================= PENYIMPANAN ================= */
+const KEY = 'rg_drill_kirana_gilang_v1';
+let memStore = null;
+function loadStore() {
+  let s = null;
+  try { const r = localStorage.getItem(KEY); if (r) s = JSON.parse(r); } catch (e) { s = memStore; }
+  s = s || {};
+  return { points: s.points || 0, subjectPoints: s.subjectPoints || {}, seen: s.seen || {}, history: s.history || [] };
+}
+function saveStore() { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) { memStore = store; } }
+let store = loadStore();
+const seenSet = s => new Set(store.seen[s] || []);
+
+/* ================= NAVIGASI ================= */
+function show(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+  const v = $(id); v.classList.remove('hidden'); v.classList.remove('enter'); void v.offsetWidth; v.classList.add('enter');
+  closeMenus();
+}
+function closeMenus() { $('kelas-menu').classList.add('hidden'); }
+function toggleKelas(e) { e.stopPropagation(); $('kelas-menu').classList.toggle('hidden'); }
+document.addEventListener('click', () => closeMenus());
+function toast(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  $('app').appendChild(t); setTimeout(() => t.remove(), 2400);
+}
+function ripple(e) {
+  const b = e.target.closest('.btn'); if (!b || b.disabled) return;
+  const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height), s = document.createElement('span');
+  s.className = 'rip'; s.style.cssText = `width:${d}px;height:${d}px;left:${e.clientX - r.left - d / 2}px;top:${e.clientY - r.top - d / 2}px`;
+  b.appendChild(s); setTimeout(() => s.remove(), 600);
+}
+document.addEventListener('pointerdown', ripple);
+
+/* ----- overlay: sheet & dialog ----- */
+function showSheet(html) { const o = $('overlay'); o.className = 'backdrop'; o.innerHTML = `<div class="sheet">${html}</div>`; }
+function showDlg(title, text, buttons) {
+  const o = $('overlay'); o.className = 'backdrop center';
+  o.innerHTML = `<div class="dlg"><h3>${title}</h3><p>${text}</p><div class="acts">${buttons.map(b => `<button class="btn ${b.cls || ''}" onclick="${act(() => { hideOverlay(); b.fn && b.fn(); })}">${b.label}</button>`).join('')}</div></div>`;
+}
+function hideOverlay() { const o = $('overlay'); o.className = 'backdrop hidden'; o.innerHTML = ''; }
+function overlayClick(e) { if (e.target.id === 'overlay' && !OVERLAY_LOCK) hideOverlay(); }
+let OVERLAY_LOCK = false;
+function openSheet(name) {
+  if (name !== 'sh-about') return;
+  const f = [['🎯', 'Pilih topik sesukamu', 'Centang satu atau beberapa topik, lalu atur jumlah soal.'], ['⏱️', 'Timer & Stopwatch', 'Aktifkan timer untuk melatih kecepatan, atau pakai stopwatch tanpa batas waktu.'], ['📊', 'Tingkat kesulitan', 'Setiap soal berlabel Mudah, Sedang, atau Sulit dengan poin berbeda (10 / 20 / 30).'], ['💡', 'Pembahasan & video', 'Langsung lihat pembahasan setelah Cek Jawaban, plus tautan video belajar YouTube.'], ['🔖', 'Ragu-ragu & Daftar soal', 'Tandai soal yang masih ragu dan lompat ke nomor mana pun.'], ['🕘', 'Riwayat pengerjaan', 'Semua drill tersimpan dan bisa dibuka lagi untuk review.'], ['🔁', 'Soal selalu baru', 'Saat drill lagi, kamu tidak akan mendapat soal yang sudah pernah dikerjakan.']];
+  showSheet(`<div class="sh-head"><h3>Seputar Drill Soal</h3><button class="x" onclick="hideOverlay()">✕</button></div>${f.map(x => `<div class="feat"><div class="fi">${x[0]}</div><div><b>${x[1]}</b><span>${x[2]}</span></div></div>`).join('')}<button class="btn full" onclick="hideOverlay()">Mengerti</button>`);
+}
+
+/* ================= HOME ================= */
+function goHome() { stopTimer(); renderHome(); show('v-home'); }
+function renderHome() {
+  $('home-points').textContent = store.points;
+  const grid = $('subject-grid'); grid.innerHTML = '';
+  Object.keys(db).forEach((s, i) => {
+    const total = db[s].length, done = seenSet(s).size, pts = store.subjectPoints[s] || 0;
+    const b = document.createElement('button');
+    b.className = 'card subj'; b.style.animationDelay = (0.12 + i * 0.07) + 's';
+    b.onclick = () => openSubject(s);
+    b.innerHTML = `<svg class="chev" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <div class="ic" style="background:${SUBJ[s].bg}">${ICON(s)}</div>
+      <div class="nm">${s}</div>
+      <div class="row"><span class="coin"><i></i>${pts}</span><small>${done}/${total} soal</small></div>
+      <div class="bar"><i data-w="${Math.round(done / total * 100)}"></i></div>`;
+    grid.appendChild(b);
+  });
+  setTimeout(() => document.querySelectorAll('#subject-grid .bar i').forEach(e => e.style.width = e.dataset.w + '%'), 80);
+}
+
+/* ================= PILIH TOPIK ================= */
+let CUR = { subject: null, topics: new Set(), n: 10, timerOn: false, minutes: 20, minEdited: false, diffs: new Set([1, 2, 3]) };
+function openSubject(s) {
+  CUR = { subject: s, topics: new Set(), n: 10, timerOn: false, minutes: 20, minEdited: false, diffs: new Set([1, 2, 3]) };
+  $('topics-title').textContent = s; $('topic-q').value = '';
+  renderTopics(); show('v-topics');
+}
+function renderTopics() {
+  const s = CUR.subject, q = $('topic-q').value.trim().toLowerCase(), seen = seenSet(s);
+  const list = $('topic-list'); list.innerHTML = '';
+  const tps = topicsOf(s).filter(t => t.toLowerCase().includes(q));
+  tps.forEach((t, i) => {
+    const qs = db[s].filter(x => x.topic === t), fresh = qs.filter(x => !seen.has(x.id)).length;
+    const cnt = d => qs.filter(x => x.diff === d).length;
+    const el = document.createElement('div');
+    el.className = 'card topic' + (CUR.topics.has(t) ? ' on' : ''); el.style.animationDelay = (i * 0.04) + 's';
+    el.onclick = () => { CUR.topics.has(t) ? CUR.topics.delete(t) : CUR.topics.add(t); renderTopics(); };
+    el.innerHTML = `<div class="cb">${CHECK}</div><div style="flex:1"><div class="t">${esc(t)}</div><div class="m">${qs.length} soal · ${fresh} belum dikerjakan</div>
+      <div class="chips">${[1, 2, 3].filter(cnt).map(d => `<span class="chip ${DIFF[d].cls}">${DIFF[d].label} ${cnt(d)}</span>`).join('')}</div></div>`;
+    list.appendChild(el);
+  });
+  if (!tps.length) list.innerHTML = `<div class="empty"><div class="big">🔍</div><b>Topik tidak ditemukan</b>Coba kata kunci lain.</div>`;
+  const all = topicsOf(s), n = CUR.topics.size;
+  $('topic-count').textContent = `${all.length} topik tersedia`;
+  $('btn-all').textContent = n === all.length ? 'Batal Pilih Semua' : 'Pilih Semua';
+  $('topic-info').innerHTML = n ? `<b style="color:var(--ink)">${n} topik dipilih</b><br>${poolFor().length} soal baru tersedia` : 'Pilih minimal 1 topik';
+  $('btn-setup').disabled = !n;
+}
+function toggleAllTopics() { const all = topicsOf(CUR.subject); CUR.topics.size === all.length ? CUR.topics.clear() : all.forEach(t => CUR.topics.add(t)); renderTopics(); }
+function poolFor(diffs) {
+  const seen = seenSet(CUR.subject), d = diffs || CUR.diffs;
+  return db[CUR.subject].filter(q => CUR.topics.has(q.topic) && d.has(q.diff) && !seen.has(q.id));
+}
+
+/* ================= ATUR DRILL (bottom sheet) ================= */
+function openSetup() {
+  const mx = poolFor().length;
+  CUR.n = Math.min(Math.max(CUR.n, 1), Math.max(mx, 1)); if (mx >= 10 && !CUR._init) { CUR.n = 10; } CUR._init = true;
+  if (!CUR.minEdited) CUR.minutes = Math.max(1, CUR.n * 2);
+  drawSetup();
+}
+function drawSetup() {
+  const mx = poolFor().length, n = Math.min(CUR.n, mx);
+  const empty = mx === 0;
+  const dchips = [1, 2, 3].map(d => `<button class="dchip ${CUR.diffs.has(d) ? 'on' : ''}" onclick="${act(() => { CUR.diffs.has(d) ? (CUR.diffs.size > 1 && CUR.diffs.delete(d)) : CUR.diffs.add(d); CUR.n = Math.min(CUR.n, Math.max(1, poolFor().length)); if (!CUR.minEdited) CUR.minutes = Math.max(1, CUR.n * 2); drawSetup(); })}">${DIFF[d].label}</button>`).join('');
+  showSheet(`
+    <div class="sh-head"><h3>Atur Drill sesuai kebutuhanmu</h3><button class="x" onclick="hideOverlay()">✕</button></div>
+    ${empty ? `<div class="warnbox">Kamu sudah mengerjakan semua soal pada topik & tingkat kesulitan ini.<button onclick="${act(resetSeen)}">Reset soal topik ini agar bisa dikerjakan lagi</button></div>` : ''}
+    <div class="set-row"><div class="lb"><svg fill="none" stroke="#582f9c" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14l-3-2-2 2-2-2-2 2-2-2-3 2V6a2 2 0 012-2z"/></svg><div><b>Jumlah Soal</b><span class="s">Berapa soal yang ingin kamu kerjakan? (maks. ${mx})</span></div></div>
+      <div class="stepper"><button ${n <= 1 ? 'disabled' : ''} onclick="${act(() => stepN(-1))}">−</button><span>${empty ? 0 : n}</span><button ${n >= mx ? 'disabled' : ''} onclick="${act(() => stepN(1))}">+</button></div></div>
+    <div style="font-family:var(--head);font-weight:700;font-size:14px;margin-bottom:2px">Tingkat Kesulitan</div>
+    <div class="dchips">${dchips}</div>
+    <div class="tchk" onclick="${act(() => { CUR.timerOn = !CUR.timerOn; drawSetup(); })}">
+      <svg width="22" height="22" fill="none" stroke="#f08a00" viewBox="0 0 24 24" stroke-width="2.2"><circle cx="12" cy="13" r="8"/><path stroke-linecap="round" d="M12 9v4l2.5 2M9 2h6"/></svg>
+      <b>Aktifkan timer pengerjaan</b><div class="cb ${CUR.timerOn ? 'on' : ''}" style="margin:0">${CHECK}</div></div>
+    ${CUR.timerOn ? `<div class="set-row enter-up"><div class="lb" style="padding-left:32px"><div><span class="s">Berapa menit yang ingin kamu pakai?</span></div></div>
+      <div class="stepper"><button ${CUR.minutes <= 1 ? 'disabled' : ''} onclick="${act(() => stepM(-1))}">−</button><span>${CUR.minutes}</span><button onclick="${act(() => stepM(1))}">+</button></div></div>` : ''}
+    <div class="sum"><div>Total soal<b>${empty ? 0 : n} soal</b></div><div>Total waktu<b>${CUR.timerOn ? CUR.minutes + ' menit' : 'Stopwatch'}</b></div></div>
+    <button class="btn full" ${empty ? 'disabled' : ''} onclick="startDrill()">Mulai Drill</button>`);
+}
+function stepN(d) { const mx = poolFor().length; CUR.n = Math.min(mx, Math.max(1, CUR.n + d)); if (!CUR.minEdited) CUR.minutes = Math.max(1, CUR.n * 2); drawSetup(); }
+function stepM(d) { CUR.minutes = Math.min(180, Math.max(1, CUR.minutes + d)); CUR.minEdited = true; drawSetup(); }
+function resetSeen() {
+  const ids = new Set(db[CUR.subject].filter(q => CUR.topics.has(q.topic)).map(q => q.id));
+  store.seen[CUR.subject] = (store.seen[CUR.subject] || []).filter(id => !ids.has(id)); saveStore();
+  CUR.n = 10; CUR._init = false; renderTopics(); toast('Soal berhasil di-reset'); openSetup();
+}
+
+/* ================= DRILL ================= */
+let SES = null, TIMER = null;
+function startDrill() {
+  const pool = poolFor(); if (!pool.length) return;
+  const n = Math.min(CUR.n, pool.length);
+  SES = { subject: CUR.subject, topics: [...CUR.topics], qs: shuffle(pool).slice(0, n), answers: [], draft: {}, flags: new Set(), idx: 0, elapsed: 0, timerOn: CUR.timerOn, limit: CUR.minutes * 60, points: 0, done: false };
+  hideOverlay();
+  $('d-subject').textContent = SES.subject;
+  $('d-topics').textContent = SES.topics.length > 1 ? `${SES.topics.length} topik dipilih` : SES.topics[0];
+  $('d-points').textContent = 0;
+  stopTimer(); TIMER = setInterval(tick, 1000); updateTimer();
+  show('v-drill'); renderQ();
+}
+function stopTimer() { if (TIMER) { clearInterval(TIMER); TIMER = null; } }
+function tick() {
+  if (!SES || SES.done) return stopTimer();
+  SES.elapsed++; updateTimer();
+  if (SES.timerOn && SES.elapsed >= SES.limit) { toast('Waktu habis! ⏰'); finishDrill(true); }
+}
+function updateTimer() {
+  const left = Math.max(0, SES.limit - SES.elapsed);
+  $('d-timer').textContent = SES.timerOn ? fmtTime(left) : fmtTime(SES.elapsed);
+  $('d-tpill').classList.toggle('warn', SES.timerOn && left <= 60);
+}
+const cur = () => SES.qs[SES.idx];
+function ready(q, d) {
+  if (d == null) return false;
+  if (q.type === 'single') return true;
+  if (q.type === 'multi') return d.length > 0;
+  return d.every(x => x !== null);
+}
+function renderQ() {
+  const q = cur(), i = SES.idx, n = SES.qs.length;
+  $('d-qno').textContent = `Soal ${i + 1} dari ${n}`;
+  $('d-diff').className = 'chip ' + DIFF[q.diff].cls; $('d-diff').textContent = DIFF[q.diff].label + ' · ' + DIFF[q.diff].pts + ' poin';
+  $('d-flag').classList.toggle('on', SES.flags.has(i));
+  $('d-bar').style.width = (SES.answers.filter(Boolean).length / n * 100) + '%';
+  const pw = $('d-passage-wrap');
+  if (q.passage) {
+    pw.innerHTML = `<div class="passage" id="d-passage">${esc(q.passage)}</div><button class="ptoggle" onclick="togglePassage()" id="d-ptoggle">Baca selengkapnya ▾</button>`;
+  } else pw.innerHTML = '';
+  $('d-question').textContent = q.question;
+  $('d-hint').innerHTML = q.type === 'multi' ? '<span class="hint">Pilih semua jawaban yang benar (bisa lebih dari satu)</span>' : q.type === 'tf' ? '<span class="hint">Tentukan pilihan untuk setiap pernyataan</span>' : '';
+  paint(true);
+  $('d-scroll').scrollTop = 0;
+  const sc = $('d-scroll'); sc.classList.remove('enter-up'); void sc.offsetWidth; sc.classList.add('enter-up');
+}
+function togglePassage() {
+  const p = $('d-passage'); p.classList.toggle('open');
+  $('d-ptoggle').textContent = p.classList.contains('open') ? 'Tutup bacaan ▴' : 'Baca selengkapnya ▾';
+}
+function paint(full) {
+  const q = cur(), i = SES.idx, ans = SES.answers[i], d = SES.draft[i];
+  const box = $('d-opts');
+  let h = '';
+  if (q.type === 'tf') {
+    h = q.statements.map((st, k) => {
+      const btns = q.labels.map((lb, j) => {
+        let c = 'tfb';
+        if (ans) { if (ans.sel[k] === j) c += (j === q.answer[k] ? ' ok' : ' bad'); else if (q.answer[k] === j) c += ' key'; }
+        else if (d && d[k] === j) c += ' sel';
+        return `<button class="${c}" ${ans ? 'disabled' : ''} onclick="pickTf(${k},${j})">${esc(lb)}</button>`;
+      }).join('');
+      return `<div class="tfc"><p>${k + 1}. ${esc(st)}</p><div class="btns">${btns}</div></div>`;
+    }).join('');
+  } else {
+    h = q.options.map((o, k) => {
+      let c = 'opt' + (q.type === 'multi' ? ' multi' : '');
+      if (ans) {
+        c += ' lock';
+        const chosen = q.type === 'single' ? ans.sel === k : ans.sel.includes(k);
+        const right = q.type === 'single' ? q.answer === k : q.answer.includes(k);
+        if (chosen) c += right ? ' ok' : ' bad'; else if (right) c += ' ok';
+      } else if (q.type === 'single' ? d === k : (d || []).includes(k)) c += ' sel';
+      return `<button class="${c}" ${ans ? 'disabled' : ''} onclick="pickOpt(${k})"><span class="ltr">${LABELS[k]}</span><span>${esc(o)}</span></button>`;
+    }).join('');
+  }
+  box.innerHTML = h;
+  // footer & feedback
+  const main = $('d-main'), skip = $('d-skip'), last = i === SES.qs.length - 1;
+  if (ans) {
+    main.disabled = false; main.textContent = last ? 'Selesai' : 'Selanjutnya'; skip.classList.add('hidden');
+    $('d-fb').innerHTML = feedbackHtml(q, ans);
+  } else {
+    main.disabled = !ready(q, d); main.textContent = 'Cek Jawaban'; skip.classList.remove('hidden'); skip.textContent = last ? 'Akhiri' : 'Lewati';
+    $('d-fb').innerHTML = '';
+  }
+}
+function pickOpt(k) {
+  if (SES.answers[SES.idx]) return; const q = cur();
+  if (q.type === 'single') SES.draft[SES.idx] = k;
+  else { const a = SES.draft[SES.idx] || []; const p = a.indexOf(k); p >= 0 ? a.splice(p, 1) : a.push(k); SES.draft[SES.idx] = a; }
+  paint();
+}
+function pickTf(k, j) {
+  if (SES.answers[SES.idx]) return; const q = cur();
+  const a = SES.draft[SES.idx] || (SES.draft[SES.idx] = q.statements.map(() => null)); a[k] = j; paint();
+}
+function toggleFlag() { SES.flags.has(SES.idx) ? SES.flags.delete(SES.idx) : SES.flags.add(SES.idx); $('d-flag').classList.toggle('on', SES.flags.has(SES.idx)); toast(SES.flags.has(SES.idx) ? 'Soal ditandai ragu-ragu 🔖' : 'Tanda ragu-ragu dihapus'); }
+function sameSel(q, sel) {
+  if (q.type === 'single') return sel === q.answer;
+  const key = q.type === 'multi' ? [...q.answer].sort((a, b) => a - b) : q.answer;
+  return sel.length === key.length && sel.every((v, i) => v === key[i]);
+}
+function videoUrl(q) { return 'https://www.youtube.com/results?search_query=' + encodeURIComponent(q.vq + ' ' + SUBJ[q.subject].sfx); }
+function vidHtml(q) {
+  return `<a class="vid" href="${videoUrl(q)}" target="_blank" rel="noopener"><div class="yt"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><div><b>Video pembelajaran terkait</b><span>${esc(q.vq)} — cari di YouTube</span></div></a>`;
+}
+function keyHtml(q) {
+  if (q.type === 'tf') return q.statements.map((s, k) => `${k + 1}. ${esc(s)} → <b>${esc(q.labels[q.answer[k]])}</b>`).join('<br>');
+  const ks = q.type === 'single' ? [q.answer] : [...q.answer].sort((a, b) => a - b);
+  return ks.map(k => `<b>${LABELS[k]}.</b> ${esc(q.options[k])}`).join('<br>');
+}
+function userHtml(q, sel) {
+  if (q.type === 'tf') return q.statements.map((s, k) => `${k + 1}. ${esc(s)} → <b>${esc(q.labels[sel[k]])}</b>`).join('<br>');
+  const ks = q.type === 'single' ? [sel] : sel;
+  return ks.map(k => `<b>${LABELS[k]}.</b> ${esc(q.options[k])}`).join('<br>');
+}
+function feedbackHtml(q, ans) {
+  return `<div class="fb ${ans.ok ? 'ok' : 'bad'}"><h4>${ans.ok ? 'Jawaban Benar! 🎉' : 'Jawaban Kurang Tepat 😅'}</h4>
+   ${ans.ok ? '' : `<div class="key">Kunci jawaban:<br>${keyHtml(q)}</div>`}
+   <p><b style="font-family:var(--head)">Pembahasan</b>\n${esc(q.pembahasan)}</p>${vidHtml(q)}</div>`;
+}
+function mainAction() {
+  const q = cur(), i = SES.idx;
+  if (SES.answers[i]) { if (i === SES.qs.length - 1) return askFinish(); SES.idx++; return renderQ(); }
+  let sel = SES.draft[i]; if (!ready(q, sel)) return;
+  if (q.type === 'multi') sel = [...sel].sort((a, b) => a - b);
+  const ok = sameSel(q, sel);
+  SES.answers[i] = { sel, ok };
+  if (ok) { const p = DIFF[q.diff].pts; SES.points += p; $('d-points').textContent = SES.points; const f = document.createElement('div'); f.className = 'floatpts'; f.textContent = '+' + p; $('app').appendChild(f); setTimeout(() => f.remove(), 1300); }
+  $('d-bar').style.width = (SES.answers.filter(Boolean).length / SES.qs.length * 100) + '%';
+  paint();
+  setTimeout(() => $('d-fb').scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+}
+function skipQ() {
+  if (SES.idx === SES.qs.length - 1) return askFinish();
+  SES.idx++; renderQ();
+}
+function openNav() {
+  const cells = SES.qs.map((q, i) => { const a = SES.answers[i]; let c = 'qn'; if (a) c += a.ok ? ' ok' : ' bad'; if (i === SES.idx) c += ' cur'; if (SES.flags.has(i)) c += ' fl'; return `<button class="${c}" onclick="${act(() => { hideOverlay(); SES.idx = i; renderQ(); })}">${i + 1}</button>`; }).join('');
+  showSheet(`<div class="sh-head"><h3>Daftar Soal</h3><button class="x" onclick="hideOverlay()">✕</button></div>
+   <div class="legend"><span><i style="background:var(--ok-bg);border:1.5px solid var(--ok)"></i>Benar</span><span><i style="background:var(--bad-bg);border:1.5px solid var(--bad)"></i>Salah</span><span><i style="background:#fff;border:1.5px solid var(--line)"></i>Belum dijawab</span><span><i style="background:#ffa31a;border-radius:50%"></i>Ragu-ragu</span></div>
+   <div class="qgrid">${cells}</div><button class="btn full" onclick="${act(askFinish)}">Akhiri Drill</button>`);
+}
+function askExit() {
+  showDlg('Keluar dari drill?', 'Progres drill ini tidak akan tersimpan di riwayat dan poinnya tidak ditambahkan.', [{ label: 'Lanjut Drill', cls: 'ghost' }, { label: 'Keluar', fn: () => { SES = null; stopTimer(); goHome(); } }]);
+}
+function askFinish() {
+  const un = SES.qs.length - SES.answers.filter(Boolean).length;
+  if (!un) return finishDrill(false);
+  showDlg('Akhiri drill sekarang?', `Masih ada <b>${un} soal</b> yang belum dijawab. Soal yang belum dijawab dihitung terlewat.`, [{ label: 'Lanjut Drill', cls: 'ghost' }, { label: 'Akhiri', fn: () => finishDrill(false) }]);
+}
+
+/* ================= SELESAI & HASIL ================= */
+function finishDrill() {
+  if (!SES || SES.done) return; SES.done = true; stopTimer(); hideOverlay();
+  const ans = SES.qs.map((_, i) => SES.answers[i] || null);
+  const correct = ans.filter(a => a && a.ok).length, wrong = ans.filter(a => a && !a.ok).length;
+  const rec = { id: Date.now(), ts: Date.now(), subject: SES.subject, topics: SES.topics, qids: SES.qs.map(q => q.id), answers: ans, correct, wrong, skipped: ans.length - correct - wrong, total: ans.length, duration: SES.elapsed, points: SES.points, timerOn: SES.timerOn, limit: SES.limit };
+  store.history.unshift(rec); store.history = store.history.slice(0, 100);
+  store.points += rec.points; store.subjectPoints[rec.subject] = (store.subjectPoints[rec.subject] || 0) + rec.points;
+  const seen = seenSet(rec.subject); rec.qids.forEach(id => seen.add(id)); store.seen[rec.subject] = [...seen];
+  saveStore(); LAST = rec; SES = null;
+  openResult(rec, false);
+}
+let LAST = null, RFILTER = 'all', RFROMH = false;
+function openResult(rec, fromHistory) {
+  RFROMH = fromHistory; RFILTER = 'all'; LAST = rec;
+  const pc = Math.round(rec.correct / rec.total * 100);
+  $('r-title').textContent = fromHistory ? 'Detail Riwayat' : 'Hasil Drill';
+  $('r-msg').textContent = pc >= 80 ? 'Mantap, Kirana! 🔥' : pc >= 60 ? 'Keren, terus tingkatkan! 👍' : pc >= 40 ? 'Lumayan, ayo lebih semangat 💪' : 'Jangan menyerah, coba lagi ya! 🌱';
+  $('r-sub').textContent = `${rec.subject} · ${rec.topics.length > 1 ? rec.topics.length + ' topik' : rec.topics[0]}`;
+  $('r-pts').textContent = `+${rec.points} Poin`;
+  $('r-stats').innerHTML = [[rec.correct, 'Benar', 'var(--ok)'], [rec.wrong, 'Salah', 'var(--bad)'], [rec.skipped, 'Terlewat', 'var(--mute)'], [fmtTime(rec.duration), 'Waktu', 'var(--purple)']].map((x, i) => `<div class="stat" style="animation-delay:${.15 + i * .07}s"><b style="color:${x[2]}">${x[0]}</b><span>${x[1]}</span></div>`).join('');
+  $('r-foot').innerHTML = fromHistory
+    ? `<button class="btn purple full" onclick="showHistory()">Kembali ke Riwayat</button>`
+    : `<button class="btn ghost" style="flex:1;padding:13px 8px" onclick="goHome()">Beranda</button><button class="btn" style="flex:1.4" onclick="drillAgain()">Drill Lagi</button>`;
+  show('v-result'); $('r-scroll').scrollTop = 0;
+  renderReview();
+  $('r-ring').style.strokeDashoffset = 352; $('r-pc').textContent = 0;
+  setTimeout(() => { $('r-ring').style.strokeDashoffset = 352 * (1 - pc / 100); }, 120);
+  let c = 0; const step = Math.max(1, Math.round(pc / 40)); const iv = setInterval(() => { c = Math.min(pc, c + step); $('r-pc').textContent = c; if (c >= pc) clearInterval(iv); }, 30);
+  if (!fromHistory && pc >= 80) confetti();
+}
+function resultBack() { RFROMH ? showHistory() : goHome(); }
+function drillAgain() {
+  const s = LAST.subject; openSubject(s); LAST.topics.forEach(t => CUR.topics.add(t)); renderTopics(); openSetup();
+}
+function renderReview() {
+  const rec = LAST;
+  const items = rec.qids.map((id, i) => ({ q: qById[id], a: rec.answers[i], i })).map(x => ({ ...x, st: !x.a ? 'skip' : x.a.ok ? 'ok' : 'bad' }));
+  const cnt = k => k === 'all' ? items.length : items.filter(x => x.st === k).length;
+  const tabs = [['all', 'Semua'], ['ok', 'Benar'], ['bad', 'Salah'], ['skip', 'Terlewat']];
+  $('r-tabs').innerHTML = tabs.map(t => `<button class="tab ${RFILTER === t[0] ? 'on' : ''}" onclick="${act(() => { RFILTER = t[0]; renderReview(); })}">${t[1]} (${cnt(t[0])})</button>`).join('');
+  const shown = items.filter(x => RFILTER === 'all' || x.st === RFILTER);
+  $('r-list').innerHTML = shown.length ? shown.map((x, k) => {
+    const q = x.q, a = x.a;
+    return `<div class="ritem ${x.st}" style="animation-delay:${Math.min(k, 8) * .05}s">
+      <div class="rhead"><div class="rnum">${x.i + 1}</div>${diffChip(q.diff)}<span class="rtopic">${esc(q.topic)}</span><span class="rtopic" style="flex:none">TO-1 No. ${q.no}</span></div>
+      ${q.passage ? `<details class="rp"><summary>Lihat bacaan</summary><div>${esc(q.passage)}</div></details>` : ''}
+      <div class="rq">${esc(q.question)}</div>
+      <div class="abox ${x.st === 'ok' ? 'u-ok' : x.st === 'bad' ? 'u-bad' : 'u-skip'}"><span>${x.st === 'skip' ? 'Tidak dijawab' : x.st === 'ok' ? 'Jawabanmu (Benar)' : 'Jawabanmu (Salah)'}</span>${a ? userHtml(q, a.sel) : '—'}</div>
+      ${x.st !== 'ok' ? `<div class="abox key"><span>Kunci Jawaban</span>${keyHtml(q)}</div>` : ''}
+      <div class="pemb"><b>Pembahasan</b>${esc(q.pembahasan)}</div>${vidHtml(q)}</div>`;
+  }).join('') : `<div class="empty"><div class="big">✨</div><b>Tidak ada soal</b>Tidak ada soal pada kategori ini.</div>`;
+}
+function confetti() {
+  const cols = ['#ff6b35', '#13c2b4', '#582f9c', '#ffd24d', '#ef4444', '#3b82f6'];
+  for (let i = 0; i < 38; i++) {
+    const e = document.createElement('div'); e.className = 'confetti';
+    e.style.cssText = `left:${Math.random() * 100}vw;background:${cols[i % cols.length]};animation-duration:${2 + Math.random() * 2.2}s;animation-delay:${Math.random() * .6}s;transform:rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(e); setTimeout(() => e.remove(), 5200);
+  }
+}
+
+/* ================= RIWAYAT ================= */
+function showHistory() {
+  stopTimer();
+  const box = $('h-scroll'), hs = store.history;
+  $('btn-clear-h').classList.toggle('hidden', !hs.length);
+  if (!hs.length) box.innerHTML = `<div class="empty enter-up"><div class="big">🕘</div><b>Belum ada riwayat</b>Mulai drill pertamamu, dan hasilnya akan muncul di sini.</div>`;
+  else {
+    box.innerHTML = hs.map((r, i) => {
+      const pc = Math.round(r.correct / r.total * 100), cls = pc >= 70 ? 's-hi' : pc >= 40 ? 's-mid' : 's-lo';
+      const dt = new Date(r.ts).toLocaleString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      return `<button class="card hcard" style="animation-delay:${Math.min(i, 10) * .04}s" onclick="openHistory(${r.id})">
+        <div class="ic" style="background:${SUBJ[r.subject].bg}">${ICON(r.subject)}</div>
+        <div class="b"><h4>${r.subject}</h4><small>${dt}</small><small>${r.correct}/${r.total} benar · ${fmtTime(r.duration)} · +${r.points} poin</small><small>${esc(r.topics.join(', '))}</small></div>
+        <div class="score ${cls}">${pc}%</div></button>`;
+    }).join('');
+  }
+  hideOverlay(); show('v-history');
+}
+function openHistory(id) { const r = store.history.find(x => x.id === id); if (r) openResult(r, true); }
+function askClearHistory() {
+  showDlg('Hapus semua riwayat?', 'Riwayat dan poin akan dihapus. Soal yang sudah dikerjakan juga bisa muncul lagi pada drill berikutnya.', [{ label: 'Batal', cls: 'ghost' }, { label: 'Hapus', fn: () => { store = { points: 0, subjectPoints: {}, seen: {}, history: [] }; saveStore(); showHistory(); toast('Riwayat dihapus'); } }]);
+}
+
+
+/* ===== Tombol Back Android ===== */
+window.androidBack = function () {
+  if (!$('overlay').classList.contains('hidden')) { hideOverlay(); return true; }
+  if (!$('kelas-menu').classList.contains('hidden')) { closeMenus(); return true; }
+  if (!$('v-drill').classList.contains('hidden')) { askExit(); return true; }
+  if (!$('v-result').classList.contains('hidden')) { resultBack(); return true; }
+  if (!$('v-history').classList.contains('hidden') || !$('v-topics').classList.contains('hidden')) { goHome(); return true; }
+  return false;
+};
+
+/* ================= INIT ================= */
+renderHome();
+$('v-home').classList.add('enter');
+
+</script>
+</body>
+</html>

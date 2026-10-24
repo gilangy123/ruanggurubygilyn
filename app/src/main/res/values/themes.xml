@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.DrillSoal" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/splash</item>
+        <item name="android:statusBarColor">@color/purple_d</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>
